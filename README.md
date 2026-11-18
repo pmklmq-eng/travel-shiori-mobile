@@ -1,4 +1,4 @@
-# travel-shiori-mobile
+# 横浜東京旅行（travel-shiori-mobile）
 
 旅のしおり（スマホ編集用）。
 

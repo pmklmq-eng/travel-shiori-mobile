@@ -19,14 +19,14 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 
 /* HEADER */
 .app-header{background:var(--deep);padding:20px 20px 16px;text-align:center;}
-.app-header-label{font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:4px;}
+.app-header-label{font-size:13px;letter-spacing:5px;color:var(--gold);margin-bottom:4px;}
 .app-header-title{font-family:'Shippori Mincho',serif;font-size:24px;color:var(--cream);letter-spacing:.1em;}
-.app-header-date{font-size:11px;letter-spacing:3px;color:var(--accent);margin-top:3px;}
+.app-header-date{font-size:13px;letter-spacing:3px;color:var(--accent);margin-top:3px;}
 
 /* TABS */
 .tabs{display:flex;background:var(--navy);overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab{flex:1;min-width:70px;padding:11px 6px;text-align:center;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none;}
+.tab{flex:1;min-width:70px;padding:11px 6px;text-align:center;font-size:13px;letter-spacing:1px;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none;}
 .tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(201,169,110,.08);}
 
 /* DAY PANEL */
@@ -37,22 +37,22 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 .now-banner{background:linear-gradient(135deg,var(--green),#2d6b54);border-radius:6px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;color:white;}
 .now-dot{width:10px;height:10px;background:#7effd4;border-radius:50%;flex-shrink:0;animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.3);}}
-.now-label{font-size:10px;letter-spacing:3px;opacity:.8;margin-bottom:2px;}
-.now-title{font-family:'Shippori Mincho',serif;font-size:15px;}
-.now-next{margin-left:auto;font-size:10px;opacity:.8;text-align:right;}
+.now-label{font-size:13px;letter-spacing:3px;opacity:.8;margin-bottom:2px;}
+.now-title{font-family:'Shippori Mincho',serif;font-size:16px;}
+.now-next{margin-left:auto;font-size:13px;opacity:.8;text-align:right;}
 
 /* DAY BANNER */
 .day-banner{background:var(--navy);padding:12px 16px;margin-bottom:12px;border-radius:4px;display:flex;align-items:baseline;gap:12px;}
 .day-banner-num{font-family:'Shippori Mincho',serif;font-size:26px;color:var(--gold);line-height:1;}
 .day-banner-info{flex:1;}
-.day-banner-date{font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:2px;}
-.day-banner-theme{font-family:'Shippori Mincho',serif;font-size:14px;color:var(--cream);}
+.day-banner-date{font-size:13px;letter-spacing:3px;color:var(--accent);margin-bottom:2px;}
+.day-banner-theme{font-family:'Shippori Mincho',serif;font-size:16px;color:var(--cream);}
 
 /* QUICK TRANSIT BAR */
 .quick-bar{background:var(--white);border-left:3px solid var(--accent);border-radius:2px;padding:10px 12px;margin-bottom:10px;}
-.quick-bar-label{font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;}
+.quick-bar-label{font-size:12px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;}
 .quick-bar-btns{display:flex;flex-wrap:wrap;gap:6px;}
-.qt-btn{display:inline-block;font-size:11px;background:var(--mist);color:var(--ink);border:none;padding:7px 12px;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
+.qt-btn{display:inline-block;font-size:13px;background:var(--mist);color:var(--ink);border:none;padding:7px 12px;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
 .qt-btn:active{background:var(--navy);color:var(--gold);}
 
 /* TIMELINE */
@@ -67,21 +67,21 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 .tl-item.type-transit{border-left-color:var(--accent);}
 
 /* NOW indicator */
-.now-badge{display:none;position:absolute;top:12px;right:72px;background:var(--green);color:white;font-size:9px;letter-spacing:2px;padding:2px 8px;border-radius:10px;}
+.now-badge{display:none;position:absolute;top:12px;right:72px;background:var(--green);color:white;font-size:12px;letter-spacing:2px;padding:2px 8px;border-radius:10px;}
 .tl-item.is-now .tl-title{padding-right:118px;}
 .tl-item.is-now .now-badge{display:block;}
 
 /* ITEM HEADER ROW */
 .tl-header{display:flex;align-items:stretch;gap:0;}
-.tl-drag-handle{width:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:grab;color:#ccc;font-size:13px;touch-action:none;padding-top:14px;}
+.tl-drag-handle{width:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:grab;color:#ccc;font-size:15px;touch-action:none;padding-top:14px;}
 .tl-drag-handle:active{cursor:grabbing;}
 .tl-header-main{flex:1;padding:13px 10px 0 0;}
 .tl-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px;}
-.tl-time{font-size:11px;letter-spacing:1px;color:var(--gold);font-weight:500;flex-shrink:0;min-width:40px;}
+.tl-time{font-size:13px;letter-spacing:1px;color:var(--gold);font-weight:500;flex-shrink:0;min-width:40px;}
 .tl-item.type-transit .tl-time{color:var(--accent);}
-.tl-title{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--ink);flex:1;padding-right:50px;}
+.tl-title{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:600;color:var(--ink);flex:1;padding-right:50px;}
 .tl-actions{position:absolute;top:8px;right:8px;display:flex;gap:2px;}
-.tl-btn{background:none;border:none;cursor:pointer;font-size:14px;opacity:.3;transition:opacity .2s;padding:4px;line-height:1;}
+.tl-btn{background:none;border:none;cursor:pointer;font-size:16px;opacity:.3;transition:opacity .2s;padding:4px;line-height:1;}
 .tl-btn:hover{opacity:.9;}
 .tl-btn.delete:hover{color:var(--red);opacity:1;}
 
@@ -89,20 +89,20 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 .tl-body{padding:0 10px 12px 28px;}
 
 /* DESC */
-.tl-desc{font-size:11px;color:var(--gray);line-height:1.7;margin-bottom:8px;}
+.tl-desc{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:8px;}
 
 
 /* NEXT DEST */
 .next-dest{background:linear-gradient(135deg,#fbf1e4,#f6e6d4);border-radius:4px;padding:9px 12px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.next-dest-arrow{font-size:16px;color:var(--accent);}
+.next-dest-arrow{font-size:17px;color:var(--accent);}
 .next-dest-info{flex:1;}
-.next-dest-label{font-size:9px;letter-spacing:2px;color:var(--accent);margin-bottom:2px;}
-.next-dest-title{font-size:12px;font-weight:500;color:var(--ink);}
+.next-dest-label{font-size:12px;letter-spacing:2px;color:var(--accent);margin-bottom:2px;}
+.next-dest-title{font-size:14px;font-weight:500;color:var(--ink);}
 
 /* BIG BUTTONS */
 .big-btns{display:flex;gap:6px;margin-bottom:6px;}
-.big-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:10px;letter-spacing:1px;transition:all .2s;border:none;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
-.big-btn-icon{font-size:20px;line-height:1;}
+.big-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;letter-spacing:1px;transition:all .2s;border:none;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.big-btn-icon{font-size:21px;line-height:1;}
 .big-btn.map{background:#e8f4e8;color:#2d6b54;}
 .big-btn.map:active{background:#2d6b54;color:white;}
 .big-btn.transit{background:#f6e4d2;color:#a8502a;}
@@ -114,15 +114,15 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 
 /* SMALL LINKS */
 .tl-links{display:flex;flex-wrap:wrap;gap:5px;}
-.link-btn{display:inline-block;font-size:10px;color:var(--ink);border:1px solid #ddd;padding:3px 10px;border-radius:2px;text-decoration:none;transition:all .2s;}
+.link-btn{display:inline-block;font-size:13px;color:var(--ink);border:1px solid #ddd;padding:3px 10px;border-radius:2px;text-decoration:none;transition:all .2s;}
 .link-btn:active{background:var(--navy);color:var(--gold);}
 
 /* TRANSIT GUIDE BUTTON */
-.transit-guide-btn{width:100%;padding:11px;background:var(--accent);color:white;border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;}
+.transit-guide-btn{width:100%;padding:11px;background:var(--accent);color:white;border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;}
 .transit-guide-btn:active{background:#a8502a;}
 
 /* ADD BUTTON */
-.add-btn{width:100%;padding:12px;background:none;border:1px dashed var(--gold);border-radius:4px;color:var(--gold);font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;margin-top:4px;}
+.add-btn{width:100%;padding:12px;background:none;border:1px dashed var(--gold);border-radius:4px;color:var(--gold);font-family:'Noto Sans JP',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;margin-top:4px;}
 .add-btn:active{background:rgba(201,169,110,.08);}
 
 /* MODAL */
@@ -131,175 +131,177 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 .modal{background:var(--cream);width:100%;max-width:540px;border-radius:12px 12px 0 0;overflow:hidden;animation:modalUp .25s ease;max-height:90vh;overflow-y:auto;}
 @keyframes modalUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
 .modal-header{background:var(--navy);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
-.modal-title{font-family:'Shippori Mincho',serif;font-size:16px;color:var(--cream);letter-spacing:.05em;}
+.modal-title{font-family:'Shippori Mincho',serif;font-size:17px;color:var(--cream);letter-spacing:.05em;}
 .modal-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer;line-height:1;padding:4px 8px;}
 .modal-body{padding:20px;display:flex;flex-direction:column;gap:14px;}
 .form-row{display:flex;gap:12px;}
 .form-group{flex:1;display:flex;flex-direction:column;gap:6px;}
-.form-label{font-size:10px;letter-spacing:3px;color:var(--gold);}
-.form-input,.form-textarea{background:white;border:1px solid var(--mist);border-radius:4px;padding:11px 12px;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--ink);outline:none;}
+.form-label{font-size:13px;letter-spacing:3px;color:var(--gold);}
+.form-input,.form-textarea{background:white;border:1px solid var(--mist);border-radius:4px;padding:11px 12px;font-family:'Noto Sans JP',sans-serif;font-size:15px;color:var(--ink);outline:none;}
 .form-input:focus,.form-textarea:focus{border-color:var(--gold);}
 .form-textarea{resize:vertical;min-height:64px;}
 .modal-footer{padding:0 20px 32px;display:flex;gap:10px;}
-.btn-primary{flex:1;padding:13px;background:var(--navy);color:var(--gold);border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
-.btn-secondary{flex:1;padding:13px;background:none;color:var(--ink);border:1px solid #ddd;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
+.btn-primary{flex:1;padding:13px;background:var(--navy);color:var(--gold);border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;}
+.btn-secondary{flex:1;padding:13px;background:none;color:var(--ink);border:1px solid #ddd;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:14px;letter-spacing:2px;cursor:pointer;}
 
 /* INFO GUIDE MODAL CONTENT */
 .guide-section{margin-bottom:16px;}
-.guide-section-title{font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:10px;border-bottom:1px solid var(--mist);padding-bottom:6px;}
-.guide-row{display:flex;gap:10px;margin-bottom:10px;font-size:13px;line-height:1.7;}
-.guide-row-icon{width:22px;flex-shrink:0;text-align:center;font-size:15px;}
+.guide-section-title{font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:10px;border-bottom:1px solid var(--mist);padding-bottom:6px;}
+.guide-row{display:flex;gap:10px;margin-bottom:10px;font-size:15px;line-height:1.7;}
+.guide-row-icon{width:22px;flex-shrink:0;text-align:center;font-size:16px;}
 .guide-row-text{flex:1;color:#444;}
 .guide-big-btns{display:flex;gap:8px;margin-top:12px;}
-.guide-big-btn{flex:1;padding:12px 8px;border-radius:6px;text-decoration:none;text-align:center;font-size:11px;letter-spacing:1px;transition:all .2s;}
+.guide-big-btn{flex:1;padding:12px 8px;border-radius:6px;text-decoration:none;text-align:center;font-size:13px;letter-spacing:1px;transition:all .2s;}
 .guide-big-btn.map{background:#e8f4e8;color:#2d6b54;}
 .guide-big-btn.transit{background:#f6e4d2;color:#a8502a;}
 
 /* INFO TAB */
 .info-section{padding:12px 12px 20px;}
 .info-card-block{background:var(--navy);color:var(--cream);padding:16px 18px;border-radius:6px;margin-bottom:10px;}
-.info-card-label{font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
-.info-card-value{font-family:'Shippori Mincho',serif;font-size:15px;line-height:1.6;}
+.info-card-label{font-size:12px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.info-card-value{font-family:'Shippori Mincho',serif;font-size:16px;line-height:1.6;}
 .hotel-card{background:white;border-left:3px solid var(--gold);padding:14px 14px 14px 16px;margin-bottom:10px;border-radius:4px;}
-.hotel-night{font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:4px;}
-.hotel-name{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:600;margin-bottom:4px;}
-.hotel-note{font-size:11px;color:var(--accent);line-height:1.7;margin-bottom:10px;}
+.hotel-night{font-size:12px;letter-spacing:3px;color:var(--gold);margin-bottom:4px;}
+.hotel-name{font-family:'Shippori Mincho',serif;font-size:18px;font-weight:600;margin-bottom:4px;}
+.hotel-note{font-size:13px;color:var(--accent);line-height:1.7;margin-bottom:10px;}
 .hotel-big-btns{display:flex;gap:6px;margin-bottom:8px;}
 .tips-block{background:var(--navy);padding:18px;border-radius:6px;margin-bottom:10px;}
-.tips-title{font-size:9px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;}
+.tips-title{font-size:12px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;}
 .tip-item{display:flex;gap:10px;margin-bottom:12px;color:var(--cream);}
 .tip-item:last-child{margin-bottom:0;}
-.tip-text{font-size:12px;line-height:1.8;opacity:.85;}
+.tip-text{font-size:14px;line-height:1.8;opacity:.85;}
 
 /* RAIN ALTERNATIVE */
 .rain-alt{background:linear-gradient(135deg,#f6e6d4,#f0dcc6);border-radius:6px;padding:12px 14px;margin-top:8px;}
-.rain-alt-title{font-size:9px;letter-spacing:3px;color:#a8502a;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.rain-alt-title::before{content:'🌧';font-size:14px;}
-.rain-alt-item{display:flex;gap:8px;margin-bottom:8px;font-size:11px;line-height:1.6;}
+.rain-alt-title{font-size:12px;letter-spacing:3px;color:#a8502a;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rain-alt-title::before{content:'🌧';font-size:16px;}
+.rain-alt-item{display:flex;gap:8px;margin-bottom:8px;font-size:13px;line-height:1.6;}
 .rain-alt-item:last-child{margin-bottom:0;}
 .rain-alt-icon{width:20px;flex-shrink:0;text-align:center;}
 .rain-alt-text{color:#334;flex:1;}
 .rain-alt-text strong{color:#5a2a1c;}
-.rain-alt-link{display:inline-block;font-size:10px;color:#a8502a;border:1px solid #d8b08c;padding:2px 8px;border-radius:10px;text-decoration:none;margin-top:3px;}
+.rain-alt-link{display:inline-block;font-size:13px;color:#a8502a;border:1px solid #d8b08c;padding:2px 8px;border-radius:10px;text-decoration:none;margin-top:3px;}
 
 /* CHECKIN BAR */
 .checkin-bar{display:flex;align-items:center;flex-wrap:wrap;gap:0;background:#fbf1e4;border-radius:6px;padding:10px 14px;margin-bottom:10px;}
 .checkin-item{display:flex;flex-direction:column;align-items:center;flex:1;}
 .checkin-item.in .checkin-time{color:var(--green);}
 .checkin-item.out .checkin-time{color:var(--red);}
-.checkin-label{font-size:9px;letter-spacing:2px;color:#888;margin-bottom:3px;}
-.checkin-time{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:600;color:var(--ink);}
-.checkin-divider{font-size:20px;color:#ddd;padding:0 10px;}
-.checkin-note{width:100%;font-size:9px;color:#aaa;text-align:center;margin-top:6px;letter-spacing:1px;}
+.checkin-label{font-size:12px;letter-spacing:2px;color:#888;margin-bottom:3px;}
+.checkin-time{font-family:'Shippori Mincho',serif;font-size:21px;font-weight:600;color:var(--ink);}
+.checkin-divider{font-size:21px;color:#ddd;padding:0 10px;}
+.checkin-note{width:100%;font-size:12px;color:#aaa;text-align:center;margin-top:6px;letter-spacing:1px;}
 
 /* LINK ROW */
 .link-row{display:flex;gap:6px;align-items:center;}
-.link-row .form-input{flex:1;padding:8px 10px;font-size:12px;}
-.link-row-del{background:none;border:1px solid #eee;border-radius:4px;padding:8px 10px;cursor:pointer;font-size:13px;color:#aaa;flex-shrink:0;}
+.link-row .form-input{flex:1;padding:8px 10px;font-size:14px;}
+.link-row-del{background:none;border:1px solid #eee;border-radius:4px;padding:8px 10px;cursor:pointer;font-size:15px;color:#aaa;flex-shrink:0;}
 .link-row-del:hover{border-color:var(--red);color:var(--red);}
 
 /* BOTTOM NAV */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--deep);padding:8px 0 16px;display:flex;border-top:1px solid rgba(201,169,110,.2);z-index:50;}
-.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:rgba(255,255,255,.3);transition:color .2s;font-size:9px;letter-spacing:1px;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:rgba(255,255,255,.3);transition:color .2s;font-size:12px;letter-spacing:1px;}
 .nav-item.active{color:var(--gold);}
-.nav-icon{font-size:18px;}
+.tl-header-main{padding-right:62px;}
+body.view-only .tl-header-main{padding-right:10px;}
+.nav-icon{font-size:19px;}
 
 /* GOURMET TAB */
 .gourmet-section{padding:12px 12px 20px;}
 .gourmet-area{margin-bottom:20px;}
-.gourmet-subhead{font-size:10px;letter-spacing:3px;color:var(--accent);margin:14px 0 8px;padding-left:2px;}
+.gourmet-subhead{font-size:13px;letter-spacing:3px;color:var(--accent);margin:14px 0 8px;padding-left:2px;}
 .gourmet-subhead:first-of-type{margin-top:0;}
 .gourmet-area-header{background:var(--navy);padding:12px 16px;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
-.gourmet-area-icon{font-size:20px;}
+.gourmet-area-icon{font-size:21px;}
 .gourmet-area-info{}
-.gourmet-area-label{font-size:9px;letter-spacing:3px;color:var(--gold);}
-.gourmet-area-name{font-family:'Shippori Mincho',serif;font-size:15px;color:var(--cream);}
+.gourmet-area-label{font-size:12px;letter-spacing:3px;color:var(--gold);}
+.gourmet-area-name{font-family:'Shippori Mincho',serif;font-size:16px;color:var(--cream);}
 .gourmet-shop{background:white;border-left:3px solid var(--gold);border-radius:2px;padding:12px 14px;margin-bottom:6px;}
 .gourmet-shop.budget{border-left-color:#c8703a;}
 .gourmet-shop.premium{border-left-color:#c9a96e;}
 .gourmet-shop-top{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;}
-.gourmet-shop-name{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:600;color:var(--ink);line-height:1.4;}
-.gourmet-shop-price{display:inline-block;font-size:10px;color:#9b7a3a;background:#f5ede0;letter-spacing:1px;padding:2px 8px;border-radius:10px;width:fit-content;}
-.gourmet-shop-genre{display:inline-block;font-size:9px;letter-spacing:2px;background:var(--mist);color:var(--accent);padding:2px 8px;border-radius:10px;margin-bottom:4px;}
-.gourmet-shop-desc{font-size:11px;color:var(--gray);line-height:1.7;margin-bottom:6px;}
+.gourmet-shop-name{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:600;color:var(--ink);line-height:1.4;}
+.gourmet-shop-price{display:inline-block;font-size:13px;color:#9b7a3a;background:#f5ede0;letter-spacing:1px;padding:2px 8px;border-radius:10px;width:fit-content;}
+.gourmet-shop-genre{display:inline-block;font-size:12px;letter-spacing:2px;background:var(--mist);color:var(--accent);padding:2px 8px;border-radius:10px;margin-bottom:4px;}
+.gourmet-shop-desc{font-size:13px;color:var(--gray);line-height:1.7;margin-bottom:6px;}
 .gourmet-shop-btns{display:flex;gap:5px;flex-wrap:wrap;}
-.gourmet-shop-btn{display:inline-block;font-size:10px;color:var(--ink);border:1px solid #ddd;padding:4px 10px;border-radius:2px;text-decoration:none;}
+.gourmet-shop-btn{display:inline-block;font-size:13px;color:var(--ink);border:1px solid #ddd;padding:4px 10px;border-radius:2px;text-decoration:none;}
 
 /* WISHLIST */
 .wishlist-section{margin-top:20px;}
 .wishlist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.wishlist-title{font-size:10px;letter-spacing:4px;color:var(--gold);}
-.wishlist-add-btn{background:var(--navy);color:var(--gold);border:none;border-radius:4px;padding:7px 14px;font-size:11px;letter-spacing:1px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.wishlist-title{font-size:13px;letter-spacing:4px;color:var(--gold);}
+.wishlist-add-btn{background:var(--navy);color:var(--gold);border:none;border-radius:4px;padding:7px 14px;font-size:13px;letter-spacing:1px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
 .wishlist-item{background:white;border-radius:4px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--mist);}
 .wishlist-item.visited{opacity:.5;border-left-color:var(--green);}
-.wishlist-check{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:1px;transition:all .2s;}
+.wishlist-check{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;margin-top:1px;transition:all .2s;}
 .wishlist-item.visited .wishlist-check{background:var(--green);border-color:var(--green);color:white;}
 .wishlist-body{flex:1;}
-.wishlist-name{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;margin-bottom:3px;}
-.wishlist-meta{font-size:11px;color:var(--gray);margin-bottom:4px;}
+.wishlist-name{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:600;margin-bottom:3px;}
+.wishlist-meta{font-size:13px;color:var(--gray);margin-bottom:4px;}
 .wishlist-actions{display:flex;gap:5px;}
-.wishlist-del{background:none;border:none;cursor:pointer;font-size:12px;opacity:.3;padding:2px 4px;}
+.wishlist-del{background:none;border:none;cursor:pointer;font-size:14px;opacity:.3;padding:2px 4px;}
 .wishlist-del:hover{opacity:1;color:var(--red);}
-.wishlist-empty{text-align:center;padding:30px;color:#bbb;font-size:12px;letter-spacing:2px;border:1px dashed #ddd;border-radius:4px;}
+.wishlist-empty{text-align:center;padding:30px;color:#bbb;font-size:14px;letter-spacing:2px;border:1px dashed #ddd;border-radius:4px;}
 
 /* EMPTY */
-.empty-state{text-align:center;padding:40px 20px;color:#aaa;font-size:12px;letter-spacing:2px;}
+.empty-state{text-align:center;padding:40px 20px;color:#aaa;font-size:14px;letter-spacing:2px;}
 
 /* ===== 東京駅ガイド専用スタイル ===== */
 .ts-sub-nav{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg2);margin:0 -12px;padding:0 4px;}
 .ts-sub-nav::-webkit-scrollbar{display:none;}
-.ts-sub-btn{flex:none;padding:9px 14px;border:none;background:none;color:var(--fg2);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s;}
+.ts-sub-btn{flex:none;padding:9px 14px;border:none;background:none;color:var(--fg2);font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:500;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s;}
 .ts-sub-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
 .ts-sub-panel{display:none;padding-top:12px;}
 .ts-sub-panel.active{display:block;}
 .ts-route-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px var(--shadow);cursor:pointer;}
 .ts-route-card-header{display:flex;align-items:flex-start;gap:10px;}
-.ts-route-card-title{font-weight:700;font-size:15px;flex:1;line-height:1.4;}
-.ts-route-card-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.ts-route-card-title{font-weight:700;font-size:16px;flex:1;line-height:1.4;}
+.ts-route-card-badge{font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
 .ts-badge-walk{background:var(--accent-light);color:var(--accent);}
-.ts-route-card-toggle{text-align:right;color:var(--fg3);font-size:12px;margin-top:6px;}
+.ts-route-card-toggle{text-align:right;color:var(--fg3);font-size:14px;margin-top:6px;}
 .ts-route-card-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
 .ts-route-card.open .ts-route-card-detail{display:block;}
 .ts-step-list{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;}
 .ts-step-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;position:relative;}
 .ts-step-item::before{content:'';position:absolute;left:14px;top:28px;bottom:-6px;width:2px;background:var(--border);}
 .ts-step-item:last-child::before{display:none;}
-.ts-step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
+.ts-step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
 .ts-step-content{flex:1;min-width:0;}
-.ts-step-text{font-size:14px;line-height:1.5;}
-.ts-step-note{font-size:12px;color:var(--fg3);margin-top:2px;}
+.ts-step-text{font-size:16px;line-height:1.5;}
+.ts-step-note{font-size:14px;color:var(--fg3);margin-top:2px;}
 .ts-route-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
-.ts-meta-chip{font-size:12px;color:var(--fg2);}
+.ts-meta-chip{font-size:14px;color:var(--fg2);}
 .ts-meta-chip strong{color:var(--fg);font-weight:700;}
-.line-tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;color:#fff;margin-right:4px;}
+.line-tag{display:inline-block;font-size:13px;font-weight:700;padding:1px 7px;border-radius:4px;color:#fff;margin-right:4px;}
 .line-tokaido{background:#F68B1E;}
 .line-sobu{background:#F5C300;color:#1A1714 !important;}
-.ts-map-btn{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;text-decoration:none;}
+.ts-map-btn{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Noto Sans JP',sans-serif;font-size:15px;font-weight:700;text-decoration:none;}
 .ts-spot-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px var(--shadow);}
-.ts-spot-name{font-weight:700;font-size:15px;margin-bottom:4px;}
-.ts-spot-sub{font-size:12px;color:var(--fg3);margin-bottom:6px;}
-.ts-spot-desc{font-size:13px;color:var(--fg2);line-height:1.6;margin-bottom:8px;}
+.ts-spot-name{font-weight:700;font-size:16px;margin-bottom:4px;}
+.ts-spot-sub{font-size:14px;color:var(--fg3);margin-bottom:6px;}
+.ts-spot-desc{font-size:15px;color:var(--fg2);line-height:1.6;margin-bottom:8px;}
 .ts-spot-tags{display:flex;gap:6px;flex-wrap:wrap;}
-.ts-spot-tag{font-size:11px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:20px;font-weight:500;}
-.ts-tip-card{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--fg2);line-height:1.6;}
+.ts-spot-tag{font-size:13px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:20px;font-weight:500;}
+.ts-tip-card{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:10px;font-size:15px;color:var(--fg2);line-height:1.6;}
 .ts-tip-card strong{color:var(--fg);}
 .ts-exit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
 .ts-exit-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
-.ts-exit-name{font-weight:700;font-size:14px;margin-bottom:3px;}
-.ts-exit-dest{color:var(--fg2);font-size:12px;line-height:1.5;}
+.ts-exit-name{font-weight:700;font-size:16px;margin-bottom:3px;}
+.ts-exit-dest{color:var(--fg2);font-size:14px;line-height:1.5;}
 .ts-map-link-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);}
 .ts-map-link-card:hover{background:var(--accent-light);}
 .ts-map-link-icon{font-size:28px;flex-shrink:0;}
 .ts-map-link-text{flex:1;min-width:0;}
-.ts-map-link-title{font-weight:700;font-size:14px;}
-.ts-map-link-sub{font-size:12px;color:var(--fg3);}
-.ts-map-link-arrow{color:var(--fg3);font-size:16px;}
-.ts-alert-badge{display:inline-flex;align-items:center;gap:4px;background:#FFF3E0;color:#E65100;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px;}
-.ts-trip-banner{background:var(--accent);color:#fff;border-radius:10px;padding:10px 14px;margin:14px 0 4px;font-size:13px;display:flex;align-items:center;gap:8px;}
-.ts-trip-banner strong{font-size:15px;}
+.ts-map-link-title{font-weight:700;font-size:16px;}
+.ts-map-link-sub{font-size:14px;color:var(--fg3);}
+.ts-map-link-arrow{color:var(--fg3);font-size:17px;}
+.ts-alert-badge{display:inline-flex;align-items:center;gap:4px;background:#FFF3E0;color:#E65100;font-size:13px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px;}
+.ts-trip-banner{background:var(--accent);color:#fff;border-radius:10px;padding:10px 14px;margin:14px 0 4px;font-size:15px;display:flex;align-items:center;gap:8px;}
+.ts-trip-banner strong{font-size:16px;}
 .ts-section-head{display:flex;align-items:center;gap:8px;margin:20px 0 10px;}
-.ts-section-head h2{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:700;margin:0;}
-.ts-section-icon{font-size:20px;line-height:1;flex-shrink:0;}
+.ts-section-head h2{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:700;margin:0;}
+.ts-section-icon{font-size:21px;line-height:1;flex-shrink:0;}
 
 
 /* autumn readability overrides */
@@ -507,14 +509,14 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
   <div class="ts-sub-panel" id="ts-exits">
     <div class="ts-section-head"><span class="ts-section-icon">🚪</span><h2>主な出口と行き先</h2></div>
     <div class="ts-tip-card">東京駅は<strong>丸の内側（西）</strong>と<strong>八重洲側（東）</strong>に分かれています。目的地によって出口を使い分けましょう。</div>
-    <div class="ts-section-head" style="margin-top:8px;"><h2 style="font-size:14px;">🏛 丸の内側（西口）</h2></div>
+    <div class="ts-section-head" style="margin-top:8px;"><h2 style="font-size:16px;">🏛 丸の内側（西口）</h2></div>
     <div class="ts-exit-grid">
       <div class="ts-exit-item"><div class="ts-exit-name">丸の内南口</div><div class="ts-exit-dest">赤レンガ駅舎の正面<br>KITTE・三菱一号館<br>📸 写真スポット</div></div>
       <div class="ts-exit-item"><div class="ts-exit-name">丸の内北口</div><div class="ts-exit-dest">大丸東京<br>丸の内ビル・新丸ビル<br>皇居方面</div></div>
       <div class="ts-exit-item"><div class="ts-exit-name">丸の内地下南口</div><div class="ts-exit-dest">地下鉄丸ノ内線<br>雨の日に便利</div></div>
       <div class="ts-exit-item"><div class="ts-exit-name">丸の内地下北口</div><div class="ts-exit-dest">地下鉄丸ノ内線<br>グランスタ経由も可</div></div>
     </div>
-    <div class="ts-section-head" style="margin-top:4px;"><h2 style="font-size:14px;">🏢 八重洲側（東口）</h2></div>
+    <div class="ts-section-head" style="margin-top:4px;"><h2 style="font-size:16px;">🏢 八重洲側（東口）</h2></div>
     <div class="ts-exit-grid">
       <div class="ts-exit-item"><div class="ts-exit-name">八重洲北口</div><div class="ts-exit-dest">大丸東京<br>高速バス乗り場</div></div>
       <div class="ts-exit-item"><div class="ts-exit-name">八重洲南口</div><div class="ts-exit-dest">高速バス乗り場<br>タクシー乗り場</div></div>
@@ -572,7 +574,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
     <div style="height:1px;background:var(--mist);margin:20px 0;"></div>
 
     <!-- エリア別おすすめ -->
-    <div style="font-size:10px;letter-spacing:4px;color:var(--gold-ink);margin-bottom:14px;">📍 エリア別おすすめ飲食店</div>
+    <div style="font-size:13px;letter-spacing:4px;color:var(--gold-ink);margin-bottom:14px;">📍 エリア別おすすめ飲食店</div>
 
     <!-- 横浜中華街 -->
     <div class="gourmet-area">
@@ -852,11 +854,11 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
     <div style="display:flex;gap:8px;margin-bottom:10px;">
       <div class="info-card-block" style="flex:1;">
         <div class="info-card-label">出発</div>
-        <div class="info-card-value">山形 9:00<br><small style="font-size:11px;opacity:.6">つばさ132号</small></div>
+        <div class="info-card-value">山形 9:00<br><small style="font-size:13px;opacity:.6">つばさ132号</small></div>
       </div>
       <div class="info-card-block" style="flex:1;">
         <div class="info-card-label">帰路</div>
-        <div class="info-card-value">東京 13:00<br><small style="font-size:11px;opacity:.6">つばさ139号</small></div>
+        <div class="info-card-value">東京 13:00<br><small style="font-size:13px;opacity:.6">つばさ139号</small></div>
       </div>
     </div>
     <div class="hotel-card">
@@ -876,9 +878,9 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
         <div class="checkin-note">※公式FAQより。プランにより異なる場合あり</div>
       </div>
       <div class="hotel-big-btns">
-        <a class="big-btn map" href="https://maps.google.com/?cid=16412194114761053098" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">📍</span>地図</a>
-        <a class="big-btn hotel" href="https://www.hotel-newgrand.co.jp/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🌐</span>公式サイト</a>
-        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/ホテルニューグランド横浜" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🗺</span>ルート</a>
+        <a class="big-btn map" href="https://maps.google.com/?cid=16412194114761053098" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">📍</span>地図</a>
+        <a class="big-btn hotel" href="https://www.hotel-newgrand.co.jp/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">🌐</span>公式サイト</a>
+        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/ホテルニューグランド横浜" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">🗺</span>ルート</a>
       </div>
     </div>
     <div class="hotel-card">
@@ -898,9 +900,9 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
         <div class="checkin-note">※公式FAQより。プランにより異なる場合あり</div>
       </div>
       <div class="hotel-big-btns">
-        <a class="big-btn map" href="https://maps.google.com/maps?q=東武ホテルレバント東京" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">📍</span>地図</a>
-        <a class="big-btn hotel" href="https://www.tobuhotel.co.jp/levant/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🌐</span>公式サイト</a>
-        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/東武ホテルレバント東京" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🗺</span>ルート</a>
+        <a class="big-btn map" href="https://maps.google.com/maps?q=東武ホテルレバント東京" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">📍</span>地図</a>
+        <a class="big-btn hotel" href="https://www.tobuhotel.co.jp/levant/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">🌐</span>公式サイト</a>
+        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/東武ホテルレバント東京" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">🗺</span>ルート</a>
       </div>
     </div>
     <div class="tips-block">
@@ -977,7 +979,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
       <div class="form-group">
         <div class="form-label">リンク</div>
         <div id="link-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"></div>
-        <button type="button" onclick="addLinkRow()" style="width:100%;padding:9px;background:none;border:1px dashed #c9a96e;border-radius:4px;color:#c9a96e;font-size:12px;letter-spacing:2px;cursor:pointer;">＋ リンクを追加</button>
+        <button type="button" onclick="addLinkRow()" style="width:100%;padding:9px;background:none;border:1px dashed #c9a96e;border-radius:4px;color:#c9a96e;font-size:14px;letter-spacing:2px;cursor:pointer;">＋ リンクを追加</button>
       </div>
     </div>
     <div class="modal-footer">
@@ -1219,7 +1221,7 @@ function updateNowBanners() {
           <div class="now-label">NOW — 現在の予定</div>
           <div class="now-title">${esc(item.title)}</div>
         </div>
-        ${next ? `<div class="now-next"><div style="font-size:9px;opacity:.7;margin-bottom:2px;">NEXT</div>${esc(next.title)}</div>` : ''}
+        ${next ? `<div class="now-next"><div style="font-size:12px;opacity:.7;margin-bottom:2px;">NEXT</div>${esc(next.title)}</div>` : ''}
       </div>`;
   });
 }
@@ -1545,7 +1547,7 @@ function renderWishlist(){
       <div class="wishlist-body">
         <div class="wishlist-name">${item.name}</div>
         <div class="wishlist-meta">${[item.area, item.price].filter(Boolean).join(' ／ ')}</div>
-        ${item.memo ? `<div style="font-size:11px;color:#666;line-height:1.6;margin-bottom:4px;">${item.memo}</div>` : ''}
+        ${item.memo ? `<div style="font-size:13px;color:#666;line-height:1.6;margin-bottom:4px;">${item.memo}</div>` : ''}
         <div class="wishlist-actions">
           ${item.url ? `<a class="gourmet-shop-btn" href="${item.url}" target="_blank">📍 地図</a>` : ''}
           <button class="gourmet-shop-btn" onclick="editWishlistItem(${idx})" style="cursor:pointer;background:none;">✏️ 編集</button>

@@ -20,16 +20,6 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .app-header{background:var(--deep);padding:20px 20px 16px;text-align:center;}
 .app-header-label{font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:4px;}
 .app-header-title{font-family:'Shippori Mincho',serif;font-size:24px;color:var(--cream);letter-spacing:.1em;}
-.sync-pill{margin:10px auto 0;background:rgba(13,26,53,.85);color:var(--cream);border:1px solid rgba(201,169,110,.45);border-radius:999px;padding:6px 11px;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:5px;max-width:100%;}
-.sync-pill.ok{border-color:rgba(61,139,110,.8);}
-.sync-pill.warn{border-color:rgba(181,71,74,.9);}
-.sync-pill.busy{opacity:.85;}
-.sync-help{font-size:12px;line-height:1.8;color:var(--fg2);}
-.sync-help ol{padding-left:1.3em;margin:6px 0;}
-.sync-help code{background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px;word-break:break-all;}
-.sync-status-line{font-size:12px;color:var(--navy);background:white;border:1px solid var(--mist);border-radius:4px;padding:10px 12px;line-height:1.7;}
-body.view-only .tl-actions,body.view-only .tl-drag-handle,body.view-only .add-btn,body.view-only .wishlist-actions,body.view-only .wishlist-add-btn{display:none !important;}
-body.view-only .wishlist-check{pointer-events:none;}
 .app-header-date{font-size:11px;letter-spacing:3px;color:var(--accent);margin-top:3px;}
 
 /* TABS */
@@ -315,10 +305,9 @@ body.view-only .wishlist-check{pointer-events:none;}
 <body>
 
 <div class="app-header">
-  <div class="app-header-label">TRAVEL BOOKLET · SHARED</div>
+  <div class="app-header-label">TRAVEL BOOKLET</div>
   <div class="app-header-title">旅のしおり</div>
   <div class="app-header-date">横浜・東京　2026.11.20 — 11.22</div>
-  <button class="sync-pill busy" id="sync-pill" onclick="openSyncModal()">⏳ 読み込み中</button>
 </div>
 <div class="tabs" id="tabs">
   <div class="tab active" data-tab="day1">DAY 1</div>
@@ -906,35 +895,6 @@ body.view-only .wishlist-check{pointer-events:none;}
 </div>
 
 <!-- WISHLIST MODAL -->
-<div class="modal-overlay" id="modal-sync">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">共有・編集の設定</div>
-      <button class="modal-close" onclick="closeSyncModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="sync-status-line" id="sync-status-line"></div>
-      <div class="form-group">
-        <div class="form-label">GITHUB アクセストークン</div>
-        <input class="form-input" id="sync-token" type="password" autocomplete="off" placeholder="github_pat_…">
-      </div>
-      <div class="sync-help">
-        トークンを入れた端末だけが編集でき、保存すると同行者全員のしおりに反映されます。トークンはこの端末のブラウザにだけ保存されます。人には教えないでください。
-        <ol>
-          <li>GitHub の Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token</li>
-          <li>Repository access：<b>Only select repositories</b> → <code>travel-shiori-mobile</code></li>
-          <li>Permissions → Repository permissions → <b>Contents：Read and write</b></li>
-          <li>有効期限は旅行後の日付に。発行されたトークンを上に貼り付け</li>
-        </ol>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-secondary" onclick="forgetToken()">トークン削除</button>
-      <button class="btn-secondary" onclick="reloadRemote(true)">最新を読込</button>
-      <button class="btn-primary" onclick="saveToken()">保存</button>
-    </div>
-  </div>
-</div>
 <div class="modal-overlay" id="modal-wishlist">
   <div class="modal">
     <div class="modal-header">
@@ -1180,7 +1140,7 @@ const defaultData = {
 function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
 if(location.search.includes('reset=1')){
-  try{ localStorage.removeItem('shiori-mobile-cache'); }catch(e){}
+  localStorage.removeItem('shiori-mobile-data-v1');
   location.replace(location.pathname);
 }
 function loadJSON(key, fallback) {
@@ -1191,124 +1151,8 @@ function loadJSON(key, fallback) {
     return structuredClone(fallback);
   }
 }
-// =============================================
-// SHARED STORAGE (GitHub data.json)
-// =============================================
-const GH_REPO = 'pmklmq-eng/travel-shiori-mobile';
-const GH_FILE = 'data.json';
-const GH_BRANCH = 'main';
-const CACHE_KEY = 'shiori-mobile-cache';
-const TOKEN_KEY = 'shiori-mobile-token';
-function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
-function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
-function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
-function getToken(){ return lsGet(TOKEN_KEY) || ''; }
-
-const cached = loadJSON(CACHE_KEY, null);
-let scheduleData = (cached && cached.schedule) ? cached.schedule : structuredClone(defaultData);
-let remoteSha = cached ? (cached.sha || null) : null;
-let dirty = !!(cached && cached.dirty);
-let pushTimer = null, pushing = false, lastSyncMsg = '';
-
-function b64EncodeUtf8(str){ const bytes=new TextEncoder().encode(str); let bin=''; for(let i=0;i<bytes.length;i+=0x8000){ bin+=String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000)); } return btoa(bin); }
-function b64DecodeUtf8(b64){ const bin=atob(b64.replace(/\s/g,'')); const bytes=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
-function ghHeaders(){ const h={'Accept':'application/vnd.github+json'}; const t=getToken(); if(t) h['Authorization']='Bearer '+t; return h; }
-function writeCache(){ lsSet(CACHE_KEY, JSON.stringify({schedule:scheduleData, wishlist:(typeof wishlistData!=='undefined'?wishlistData:[]), sha:remoteSha, dirty})); }
-
-function setSync(state, text){
-  lastSyncMsg = text;
-  const pill=document.getElementById('sync-pill'); if(!pill) return;
-  pill.className='sync-pill '+state; pill.textContent=text;
-  const line=document.getElementById('sync-status-line'); if(line) line.textContent=text;
-}
-function refreshMode(){
-  document.body.classList.toggle('view-only', !getToken());
-}
-function idleStatus(){
-  if(!getToken()) setSync('', '👀 閲覧のみ（タップで編集設定）');
-  else if(dirty) setSync('warn', '⚠️ 未保存の変更あり（タップ）');
-  else setSync('ok', '☁️ 共有済み');
-}
-
-async function fetchRemote(){
-  const url='https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE+'?ref='+GH_BRANCH+'&_='+Date.now();
-  const r=await fetch(url,{headers:ghHeaders(),cache:'no-store'});
-  if(r.status===404) return {sha:null, data:null};
-  if(!r.ok) throw new Error('HTTP '+r.status);
-  const j=await r.json();
-  return {sha:j.sha, data:JSON.parse(b64DecodeUtf8(j.content))};
-}
-
-async function reloadRemote(force){
-  if(dirty && !force) return;
-  if(dirty && force && !confirm('この端末の未保存の変更を捨てて、最新を読み込みますか？')) return;
-  setSync('busy','⏳ 読み込み中');
-  try{
-    const {sha,data}=await fetchRemote();
-    remoteSha=sha;
-    if(data && data.schedule){ scheduleData=data.schedule; if(Array.isArray(data.wishlist)) wishlistData=data.wishlist; }
-    dirty=false; writeCache(); renderAll(); renderWishlist(); idleStatus();
-  }catch(e){
-    setSync('warn','⚠️ 読み込み失敗（オフライン表示中）');
-  }
-}
-
-function save(){ dirty=true; writeCache(); schedulePush(); }
-function schedulePush(){
-  if(!getToken()){ idleStatus(); return; }
-  setSync('busy','⏳ 保存待ち…');
-  clearTimeout(pushTimer); pushTimer=setTimeout(pushRemote, 1200);
-}
-async function pushRemote(){
-  if(pushing){ schedulePush(); return; }
-  if(!dirty || !getToken()){ idleStatus(); return; }
-  pushing=true; setSync('busy','⏳ 保存中…');
-  try{
-    let latest=null;
-    try{ latest=await fetchRemote(); }catch(e){}
-    if(latest && latest.sha && remoteSha && latest.sha!==remoteSha){
-      const overwrite=confirm('ほかの端末でしおりが更新されています。\n\nOK：この端末の内容で上書き\nキャンセル：最新の内容を読み込む（この端末の変更は消えます）');
-      if(!overwrite){
-        pushing=false; dirty=false;
-        if(latest.data && latest.data.schedule){ scheduleData=latest.data.schedule; if(Array.isArray(latest.data.wishlist)) wishlistData=latest.data.wishlist; }
-        remoteSha=latest.sha; writeCache(); renderAll(); renderWishlist(); idleStatus(); return;
-      }
-    }
-    const body={
-      message:'しおりを更新',
-      branch:GH_BRANCH,
-      content:b64EncodeUtf8(JSON.stringify({schedule:scheduleData, wishlist:wishlistData, updatedAt:new Date().toISOString()},null,1))
-    };
-    const sha=(latest && latest.sha) || remoteSha; if(sha) body.sha=sha;
-    const r=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},ghHeaders()),body:JSON.stringify(body)});
-    if(r.status===401||r.status===403) throw new Error('auth');
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const j=await r.json(); remoteSha=j.content.sha; dirty=false; writeCache(); idleStatus();
-  }catch(e){
-    setSync('warn', e.message==='auth' ? '⚠️ トークンが無効です（タップ）' : '⚠️ 保存失敗・あとで再試行（タップ）');
-  }finally{ pushing=false; }
-}
-
-function openSyncModal(){
-  document.getElementById('sync-token').value='';
-  document.getElementById('sync-token').placeholder = getToken() ? '設定済み（変更する場合のみ入力）' : 'github_pat_…';
-  document.getElementById('sync-status-line').textContent=lastSyncMsg;
-  document.getElementById('modal-sync').classList.add('open');
-}
-function closeSyncModal(){ document.getElementById('modal-sync').classList.remove('open'); }
-async function saveToken(){
-  const v=document.getElementById('sync-token').value.trim();
-  if(v){ lsSet(TOKEN_KEY,v); }
-  refreshMode(); closeSyncModal();
-  if(dirty) pushRemote(); else reloadRemote(false);
-}
-function forgetToken(){
-  if(!confirm('この端末からトークンを削除しますか？（閲覧のみになります）')) return;
-  lsDel(TOKEN_KEY); refreshMode(); closeSyncModal(); idleStatus();
-}
-document.getElementById('modal-sync').addEventListener('click', e => { if(e.target===document.getElementById('modal-sync')) closeSyncModal(); });
-document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible' && !dirty && !document.querySelector('.modal-overlay.open')) reloadRemote(false); });
-setInterval(()=>{ if(document.visibilityState==='visible' && !dirty && !pushing && !document.querySelector('.modal-overlay.open')) reloadRemote(false); }, 120000);
+let scheduleData = loadJSON('shiori-mobile-data-v1', defaultData);
+function save(){ localStorage.setItem('shiori-mobile-data-v1', JSON.stringify(scheduleData)); }
 
 // =============================================
 // NOW DETECTION
@@ -1660,10 +1504,10 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>swit
 // =============================================
 // WISHLIST
 // =============================================
-let wishlistData = (cached && Array.isArray(cached.wishlist)) ? cached.wishlist : [];
+let wishlistData = JSON.parse(localStorage.getItem('shiori-mobile-wishlist') || '[]');
 let wlEditingIdx = null;
 
-function saveWishlist(){ save(); }
+function saveWishlist(){ localStorage.setItem('shiori-mobile-wishlist', JSON.stringify(wishlistData)); }
 
 function renderWishlist(){
   const el = document.getElementById('wishlist-container');
@@ -1753,8 +1597,6 @@ document.getElementById('modal-wishlist').addEventListener('click', e => {
 // =============================================
 renderAll();
 renderWishlist();
-refreshMode();
-if(dirty && getToken()) pushRemote(); else reloadRemote(false);
 // Update now-badge every minute
 setInterval(()=>{
   const isDragging = document.querySelector('.tl-item.dragging');

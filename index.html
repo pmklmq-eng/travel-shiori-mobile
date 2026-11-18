@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>旅のしおり｜横浜・東京 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2744; --deep: #0d1a35; --gold: #c9a96e; --gold-light: #e8d5a3;
+  --cream: #f8f4ec; --mist: #e8edf5; --accent: #7a9cbf; --red: #b5474a;
+  --green: #3d8b6e; --white: #fff; --gray: #888;
+  --border:#e3e7ef; --bg2:#eef1f6; --card:#fff; --shadow:rgba(26,39,68,.08);
+  --fg:#1a2744; --fg2:#555; --fg3:#999; --accent-light:#e6edf6;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--navy);font-weight:300;min-height:100vh;padding-bottom:80px;}
+
+/* HEADER */
+.app-header{background:var(--deep);padding:20px 20px 16px;text-align:center;}
+.app-header-label{font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:4px;}
+.app-header-title{font-family:'Shippori Mincho',serif;font-size:24px;color:var(--cream);letter-spacing:.1em;}
+.sync-pill{margin:10px auto 0;background:rgba(13,26,53,.85);color:var(--cream);border:1px solid rgba(201,169,110,.45);border-radius:999px;padding:6px 11px;font-size:11px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:5px;max-width:100%;}
+.sync-pill.ok{border-color:rgba(61,139,110,.8);}
+.sync-pill.warn{border-color:rgba(181,71,74,.9);}
+.sync-pill.busy{opacity:.85;}
+.sync-help{font-size:12px;line-height:1.8;color:var(--fg2);}
+.sync-help ol{padding-left:1.3em;margin:6px 0;}
+.sync-help code{background:var(--bg2);padding:1px 5px;border-radius:3px;font-size:11px;word-break:break-all;}
+.sync-status-line{font-size:12px;color:var(--navy);background:white;border:1px solid var(--mist);border-radius:4px;padding:10px 12px;line-height:1.7;}
+body.view-only .tl-actions,body.view-only .tl-drag-handle,body.view-only .add-btn,body.view-only .wishlist-actions,body.view-only .wishlist-add-btn{display:none !important;}
+body.view-only .wishlist-check{pointer-events:none;}
+.app-header-date{font-size:11px;letter-spacing:3px;color:var(--accent);margin-top:3px;}
+
+/* TABS */
+.tabs{display:flex;background:var(--navy);overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{flex:1;min-width:70px;padding:11px 6px;text-align:center;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;user-select:none;}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(201,169,110,.08);}
+
+/* DAY PANEL */
+.day-panel{display:none;padding:12px 12px 20px;}
+.day-panel.active{display:block;}
+
+/* NOW BANNER */
+.now-banner{background:linear-gradient(135deg,var(--green),#2d6b54);border-radius:6px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;color:white;}
+.now-dot{width:10px;height:10px;background:#7effd4;border-radius:50%;flex-shrink:0;animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.3);}}
+.now-label{font-size:10px;letter-spacing:3px;opacity:.8;margin-bottom:2px;}
+.now-title{font-family:'Shippori Mincho',serif;font-size:15px;}
+.now-next{margin-left:auto;font-size:10px;opacity:.8;text-align:right;}
+
+/* DAY BANNER */
+.day-banner{background:var(--navy);padding:12px 16px;margin-bottom:12px;border-radius:4px;display:flex;align-items:baseline;gap:12px;}
+.day-banner-num{font-family:'Shippori Mincho',serif;font-size:26px;color:var(--gold);line-height:1;}
+.day-banner-info{flex:1;}
+.day-banner-date{font-size:10px;letter-spacing:3px;color:var(--accent);margin-bottom:2px;}
+.day-banner-theme{font-family:'Shippori Mincho',serif;font-size:14px;color:var(--cream);}
+
+/* QUICK TRANSIT BAR */
+.quick-bar{background:var(--white);border-left:3px solid var(--accent);border-radius:2px;padding:10px 12px;margin-bottom:10px;}
+.quick-bar-label{font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;}
+.quick-bar-btns{display:flex;flex-wrap:wrap;gap:6px;}
+.qt-btn{display:inline-block;font-size:11px;background:var(--mist);color:var(--navy);border:none;padding:7px 12px;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
+.qt-btn:active{background:var(--navy);color:var(--gold);}
+
+/* TIMELINE */
+.timeline{position:relative;}
+
+/* TL ITEM */
+.tl-item{background:var(--white);border-radius:6px;margin-bottom:8px;border-left:3px solid var(--gold);transition:box-shadow .2s,opacity .2s;position:relative;overflow:hidden;}
+.tl-item.dragging{opacity:.45;box-shadow:0 8px 24px rgba(0,0,0,.18);}
+.tl-item.drag-over{box-shadow:0 0 0 2px var(--gold);}
+.tl-item.is-now{border-left-color:var(--green);box-shadow:0 2px 12px rgba(61,139,110,.2);}
+.tl-item.highlight{border-left-color:var(--red);}
+.tl-item.type-transit{border-left-color:var(--accent);}
+
+/* NOW indicator */
+.now-badge{display:none;position:absolute;top:12px;right:72px;background:var(--green);color:white;font-size:9px;letter-spacing:2px;padding:2px 8px;border-radius:10px;}
+.tl-item.is-now .tl-title{padding-right:118px;}
+.tl-item.is-now .now-badge{display:block;}
+
+/* ITEM HEADER ROW */
+.tl-header{display:flex;align-items:stretch;gap:0;}
+.tl-drag-handle{width:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:grab;color:#ccc;font-size:13px;touch-action:none;padding-top:14px;}
+.tl-drag-handle:active{cursor:grabbing;}
+.tl-header-main{flex:1;padding:13px 10px 0 0;}
+.tl-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px;}
+.tl-time{font-size:11px;letter-spacing:1px;color:var(--gold);font-weight:500;flex-shrink:0;min-width:40px;}
+.tl-item.type-transit .tl-time{color:var(--accent);}
+.tl-title{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--navy);flex:1;padding-right:50px;}
+.tl-actions{position:absolute;top:8px;right:8px;display:flex;gap:2px;}
+.tl-btn{background:none;border:none;cursor:pointer;font-size:14px;opacity:.3;transition:opacity .2s;padding:4px;line-height:1;}
+.tl-btn:hover{opacity:.9;}
+.tl-btn.delete:hover{color:var(--red);opacity:1;}
+
+/* ITEM BODY */
+.tl-body{padding:0 10px 12px 28px;}
+
+/* DESC */
+.tl-desc{font-size:11px;color:var(--gray);line-height:1.7;margin-bottom:8px;}
+
+
+/* NEXT DEST */
+.next-dest{background:linear-gradient(135deg,#f0f4ff,#e8f0fb);border-radius:4px;padding:9px 12px;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.next-dest-arrow{font-size:16px;color:var(--accent);}
+.next-dest-info{flex:1;}
+.next-dest-label{font-size:9px;letter-spacing:2px;color:var(--accent);margin-bottom:2px;}
+.next-dest-title{font-size:12px;font-weight:500;color:var(--navy);}
+
+/* BIG BUTTONS */
+.big-btns{display:flex;gap:6px;margin-bottom:6px;}
+.big-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:10px;letter-spacing:1px;transition:all .2s;border:none;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.big-btn-icon{font-size:20px;line-height:1;}
+.big-btn.map{background:#e8f4e8;color:#2d6b54;}
+.big-btn.map:active{background:#2d6b54;color:white;}
+.big-btn.transit{background:#e8edf8;color:#3a5a9b;}
+.big-btn.transit:active{background:#3a5a9b;color:white;}
+.big-btn.hotel{background:#fdf0e0;color:#9b6b2d;}
+.big-btn.hotel:active{background:#9b6b2d;color:white;}
+.big-btn.guide{background:#f0e8f8;color:#6b3a9b;}
+.big-btn.guide:active{background:#6b3a9b;color:white;}
+
+/* SMALL LINKS */
+.tl-links{display:flex;flex-wrap:wrap;gap:5px;}
+.link-btn{display:inline-block;font-size:10px;color:var(--navy);border:1px solid #ddd;padding:3px 10px;border-radius:2px;text-decoration:none;transition:all .2s;}
+.link-btn:active{background:var(--navy);color:var(--gold);}
+
+/* TRANSIT GUIDE BUTTON */
+.transit-guide-btn{width:100%;padding:11px;background:var(--accent);color:white;border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:6px;}
+.transit-guide-btn:active{background:#5a7da0;}
+
+/* ADD BUTTON */
+.add-btn{width:100%;padding:12px;background:none;border:1px dashed var(--gold);border-radius:4px;color:var(--gold);font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;margin-top:4px;}
+.add-btn:active{background:rgba(201,169,110,.08);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,26,53,.75);z-index:100;align-items:flex-end;justify-content:center;padding:0;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--cream);width:100%;max-width:540px;border-radius:12px 12px 0 0;overflow:hidden;animation:modalUp .25s ease;max-height:90vh;overflow-y:auto;}
+@keyframes modalUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+.modal-header{background:var(--navy);padding:18px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;}
+.modal-title{font-family:'Shippori Mincho',serif;font-size:16px;color:var(--cream);letter-spacing:.05em;}
+.modal-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:22px;cursor:pointer;line-height:1;padding:4px 8px;}
+.modal-body{padding:20px;display:flex;flex-direction:column;gap:14px;}
+.form-row{display:flex;gap:12px;}
+.form-group{flex:1;display:flex;flex-direction:column;gap:6px;}
+.form-label{font-size:10px;letter-spacing:3px;color:var(--gold);}
+.form-input,.form-textarea{background:white;border:1px solid var(--mist);border-radius:4px;padding:11px 12px;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--navy);outline:none;}
+.form-input:focus,.form-textarea:focus{border-color:var(--gold);}
+.form-textarea{resize:vertical;min-height:64px;}
+.modal-footer{padding:0 20px 32px;display:flex;gap:10px;}
+.btn-primary{flex:1;padding:13px;background:var(--navy);color:var(--gold);border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
+.btn-secondary{flex:1;padding:13px;background:none;color:var(--navy);border:1px solid #ddd;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
+
+/* INFO GUIDE MODAL CONTENT */
+.guide-section{margin-bottom:16px;}
+.guide-section-title{font-size:10px;letter-spacing:3px;color:var(--gold);margin-bottom:10px;border-bottom:1px solid var(--mist);padding-bottom:6px;}
+.guide-row{display:flex;gap:10px;margin-bottom:10px;font-size:13px;line-height:1.7;}
+.guide-row-icon{width:22px;flex-shrink:0;text-align:center;font-size:15px;}
+.guide-row-text{flex:1;color:#444;}
+.guide-big-btns{display:flex;gap:8px;margin-top:12px;}
+.guide-big-btn{flex:1;padding:12px 8px;border-radius:6px;text-decoration:none;text-align:center;font-size:11px;letter-spacing:1px;transition:all .2s;}
+.guide-big-btn.map{background:#e8f4e8;color:#2d6b54;}
+.guide-big-btn.transit{background:#e8edf8;color:#3a5a9b;}
+
+/* INFO TAB */
+.info-section{padding:12px 12px 20px;}
+.info-card-block{background:var(--navy);color:var(--cream);padding:16px 18px;border-radius:6px;margin-bottom:10px;}
+.info-card-label{font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.info-card-value{font-family:'Shippori Mincho',serif;font-size:15px;line-height:1.6;}
+.hotel-card{background:white;border-left:3px solid var(--gold);padding:14px 14px 14px 16px;margin-bottom:10px;border-radius:4px;}
+.hotel-night{font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:4px;}
+.hotel-name{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:600;margin-bottom:4px;}
+.hotel-note{font-size:11px;color:var(--accent);line-height:1.7;margin-bottom:10px;}
+.hotel-big-btns{display:flex;gap:6px;margin-bottom:8px;}
+.tips-block{background:var(--navy);padding:18px;border-radius:6px;margin-bottom:10px;}
+.tips-title{font-size:9px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;}
+.tip-item{display:flex;gap:10px;margin-bottom:12px;color:var(--cream);}
+.tip-item:last-child{margin-bottom:0;}
+.tip-text{font-size:12px;line-height:1.8;opacity:.85;}
+
+/* RAIN ALTERNATIVE */
+.rain-alt{background:linear-gradient(135deg,#e8f0fb,#dce8f8);border-radius:6px;padding:12px 14px;margin-top:8px;}
+.rain-alt-title{font-size:9px;letter-spacing:3px;color:#3a5a9b;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rain-alt-title::before{content:'🌧';font-size:14px;}
+.rain-alt-item{display:flex;gap:8px;margin-bottom:8px;font-size:11px;line-height:1.6;}
+.rain-alt-item:last-child{margin-bottom:0;}
+.rain-alt-icon{width:20px;flex-shrink:0;text-align:center;}
+.rain-alt-text{color:#334;flex:1;}
+.rain-alt-text strong{color:#1a2744;}
+.rain-alt-link{display:inline-block;font-size:10px;color:#3a5a9b;border:1px solid #aac;padding:2px 8px;border-radius:10px;text-decoration:none;margin-top:3px;}
+
+/* CHECKIN BAR */
+.checkin-bar{display:flex;align-items:center;flex-wrap:wrap;gap:0;background:#f0f4ff;border-radius:6px;padding:10px 14px;margin-bottom:10px;}
+.checkin-item{display:flex;flex-direction:column;align-items:center;flex:1;}
+.checkin-item.in .checkin-time{color:var(--green);}
+.checkin-item.out .checkin-time{color:var(--red);}
+.checkin-label{font-size:9px;letter-spacing:2px;color:#888;margin-bottom:3px;}
+.checkin-time{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:600;color:var(--navy);}
+.checkin-divider{font-size:20px;color:#ddd;padding:0 10px;}
+.checkin-note{width:100%;font-size:9px;color:#aaa;text-align:center;margin-top:6px;letter-spacing:1px;}
+
+/* LINK ROW */
+.link-row{display:flex;gap:6px;align-items:center;}
+.link-row .form-input{flex:1;padding:8px 10px;font-size:12px;}
+.link-row-del{background:none;border:1px solid #eee;border-radius:4px;padding:8px 10px;cursor:pointer;font-size:13px;color:#aaa;flex-shrink:0;}
+.link-row-del:hover{border-color:var(--red);color:var(--red);}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--deep);padding:8px 0 16px;display:flex;border-top:1px solid rgba(201,169,110,.2);z-index:50;}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:rgba(255,255,255,.3);transition:color .2s;font-size:9px;letter-spacing:1px;}
+.nav-item.active{color:var(--gold);}
+.nav-icon{font-size:18px;}
+
+/* GOURMET TAB */
+.gourmet-section{padding:12px 12px 20px;}
+.gourmet-area{margin-bottom:20px;}
+.gourmet-subhead{font-size:10px;letter-spacing:3px;color:var(--accent);margin:14px 0 8px;padding-left:2px;}
+.gourmet-subhead:first-of-type{margin-top:0;}
+.gourmet-area-header{background:var(--navy);padding:12px 16px;border-radius:4px;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+.gourmet-area-icon{font-size:20px;}
+.gourmet-area-info{}
+.gourmet-area-label{font-size:9px;letter-spacing:3px;color:var(--gold);}
+.gourmet-area-name{font-family:'Shippori Mincho',serif;font-size:15px;color:var(--cream);}
+.gourmet-shop{background:white;border-left:3px solid var(--gold);border-radius:2px;padding:12px 14px;margin-bottom:6px;}
+.gourmet-shop.budget{border-left-color:#7a9cbf;}
+.gourmet-shop.premium{border-left-color:#c9a96e;}
+.gourmet-shop-top{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;}
+.gourmet-shop-name{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:600;color:var(--navy);line-height:1.4;}
+.gourmet-shop-price{display:inline-block;font-size:10px;color:#9b7a3a;background:#f5ede0;letter-spacing:1px;padding:2px 8px;border-radius:10px;width:fit-content;}
+.gourmet-shop-genre{display:inline-block;font-size:9px;letter-spacing:2px;background:var(--mist);color:var(--accent);padding:2px 8px;border-radius:10px;margin-bottom:4px;}
+.gourmet-shop-desc{font-size:11px;color:var(--gray);line-height:1.7;margin-bottom:6px;}
+.gourmet-shop-btns{display:flex;gap:5px;flex-wrap:wrap;}
+.gourmet-shop-btn{display:inline-block;font-size:10px;color:var(--navy);border:1px solid #ddd;padding:4px 10px;border-radius:2px;text-decoration:none;}
+
+/* WISHLIST */
+.wishlist-section{margin-top:20px;}
+.wishlist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.wishlist-title{font-size:10px;letter-spacing:4px;color:var(--gold);}
+.wishlist-add-btn{background:var(--navy);color:var(--gold);border:none;border-radius:4px;padding:7px 14px;font-size:11px;letter-spacing:1px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;}
+.wishlist-item{background:white;border-radius:4px;padding:12px 14px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;border-left:3px solid var(--mist);}
+.wishlist-item.visited{opacity:.5;border-left-color:var(--green);}
+.wishlist-check{width:22px;height:22px;border-radius:50%;border:2px solid #ddd;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:1px;transition:all .2s;}
+.wishlist-item.visited .wishlist-check{background:var(--green);border-color:var(--green);color:white;}
+.wishlist-body{flex:1;}
+.wishlist-name{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;margin-bottom:3px;}
+.wishlist-meta{font-size:11px;color:var(--gray);margin-bottom:4px;}
+.wishlist-actions{display:flex;gap:5px;}
+.wishlist-del{background:none;border:none;cursor:pointer;font-size:12px;opacity:.3;padding:2px 4px;}
+.wishlist-del:hover{opacity:1;color:var(--red);}
+.wishlist-empty{text-align:center;padding:30px;color:#bbb;font-size:12px;letter-spacing:2px;border:1px dashed #ddd;border-radius:4px;}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:40px 20px;color:#aaa;font-size:12px;letter-spacing:2px;}
+
+/* ===== 東京駅ガイド専用スタイル ===== */
+.ts-sub-nav{display:flex;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--border);background:var(--bg2);margin:0 -12px;padding:0 4px;}
+.ts-sub-nav::-webkit-scrollbar{display:none;}
+.ts-sub-btn{flex:none;padding:9px 14px;border:none;background:none;color:var(--fg2);font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s;}
+.ts-sub-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700;}
+.ts-sub-panel{display:none;padding-top:12px;}
+.ts-sub-panel.active{display:block;}
+.ts-route-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px var(--shadow);cursor:pointer;}
+.ts-route-card-header{display:flex;align-items:flex-start;gap:10px;}
+.ts-route-card-title{font-weight:700;font-size:15px;flex:1;line-height:1.4;}
+.ts-route-card-badge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;flex-shrink:0;}
+.ts-badge-walk{background:var(--accent-light);color:var(--accent);}
+.ts-route-card-toggle{text-align:right;color:var(--fg3);font-size:12px;margin-top:6px;}
+.ts-route-card-detail{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.ts-route-card.open .ts-route-card-detail{display:block;}
+.ts-step-list{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;}
+.ts-step-item{display:flex;gap:10px;align-items:flex-start;padding:6px 0;position:relative;}
+.ts-step-item::before{content:'';position:absolute;left:14px;top:28px;bottom:-6px;width:2px;background:var(--border);}
+.ts-step-item:last-child::before{display:none;}
+.ts-step-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;z-index:1;}
+.ts-step-content{flex:1;min-width:0;}
+.ts-step-text{font-size:14px;line-height:1.5;}
+.ts-step-note{font-size:12px;color:var(--fg3);margin-top:2px;}
+.ts-route-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;}
+.ts-meta-chip{font-size:12px;color:var(--fg2);}
+.ts-meta-chip strong{color:var(--fg);font-weight:700;}
+.line-tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;color:#fff;margin-right:4px;}
+.line-tokaido{background:#F68B1E;}
+.line-sobu{background:#F5C300;color:#1A1714 !important;}
+.ts-map-btn{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-family:'Noto Sans JP',sans-serif;font-size:13px;font-weight:700;text-decoration:none;}
+.ts-spot-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px var(--shadow);}
+.ts-spot-name{font-weight:700;font-size:15px;margin-bottom:4px;}
+.ts-spot-sub{font-size:12px;color:var(--fg3);margin-bottom:6px;}
+.ts-spot-desc{font-size:13px;color:var(--fg2);line-height:1.6;margin-bottom:8px;}
+.ts-spot-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.ts-spot-tag{font-size:11px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:20px;font-weight:500;}
+.ts-tip-card{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--fg2);line-height:1.6;}
+.ts-tip-card strong{color:var(--fg);}
+.ts-exit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;}
+.ts-exit-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;}
+.ts-exit-name{font-weight:700;font-size:14px;margin-bottom:3px;}
+.ts-exit-dest{color:var(--fg2);font-size:12px;line-height:1.5;}
+.ts-map-link-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg);}
+.ts-map-link-card:hover{background:var(--accent-light);}
+.ts-map-link-icon{font-size:28px;flex-shrink:0;}
+.ts-map-link-text{flex:1;min-width:0;}
+.ts-map-link-title{font-weight:700;font-size:14px;}
+.ts-map-link-sub{font-size:12px;color:var(--fg3);}
+.ts-map-link-arrow{color:var(--fg3);font-size:16px;}
+.ts-alert-badge{display:inline-flex;align-items:center;gap:4px;background:#FFF3E0;color:#E65100;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px;}
+.ts-trip-banner{background:var(--accent);color:#fff;border-radius:10px;padding:10px 14px;margin:14px 0 4px;font-size:13px;display:flex;align-items:center;gap:8px;}
+.ts-trip-banner strong{font-size:15px;}
+.ts-section-head{display:flex;align-items:center;gap:8px;margin:20px 0 10px;}
+.ts-section-head h2{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:700;margin:0;}
+.ts-section-icon{font-size:20px;line-height:1;flex-shrink:0;}
+
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-header-label">TRAVEL BOOKLET · SHARED</div>
+  <div class="app-header-title">旅のしおり</div>
+  <div class="app-header-date">横浜・東京　2026.11.20 — 11.22</div>
+  <button class="sync-pill busy" id="sync-pill" onclick="openSyncModal()">⏳ 読み込み中</button>
+</div>
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="day1">DAY 1</div>
+  <div class="tab" data-tab="day2">DAY 2</div>
+  <div class="tab" data-tab="day3">DAY 3</div>
+  <div class="tab" data-tab="tokyo">🚉 東京駅</div>
+  <div class="tab" data-tab="gourmet">🍴</div>
+  <div class="tab" data-tab="info">INFO</div>
+</div>
+
+<!-- DAY 1 -->
+<div class="day-panel active" id="panel-day1">
+  <div id="now-banner-day1"></div>
+  <div class="day-banner">
+    <div class="day-banner-num">01</div>
+    <div class="day-banner-info">
+      <div class="day-banner-date">NOV 20, 2026 — FRI</div>
+      <div class="day-banner-theme">横浜到着・中華街・山下公園</div>
+    </div>
+  </div>
+  <div class="quick-bar">
+    <div class="quick-bar-label">🚃 よく使う乗換</div>
+    <div class="quick-bar-btns">
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=東京&to=横浜&kind=1" target="_blank">東京→横浜</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/station/time/23720/" target="_blank">横浜駅 時刻表</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=横浜&to=みなとみらい&kind=1" target="_blank">横浜→みなとみらい</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=横浜&to=元町中華街&kind=1" target="_blank">横浜→元町中華街</a>
+    </div>
+  </div>
+  <div class="timeline" id="timeline-day1"></div>
+  <button class="add-btn" onclick="openAddModal('day1')">＋ 予定を追加</button>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-panel" id="panel-day2">
+  <div id="now-banner-day2"></div>
+  <div class="day-banner">
+    <div class="day-banner-num">02</div>
+    <div class="day-banner-info">
+      <div class="day-banner-date">NOV 21, 2026 — SAT</div>
+      <div class="day-banner-theme">ニューグランドでゆっくり・東京へ移動</div>
+    </div>
+  </div>
+  <div class="quick-bar">
+    <div class="quick-bar-label">🚃 よく使う乗換</div>
+    <div class="quick-bar-btns">
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/station/time/23720/" target="_blank">横浜駅 時刻表</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=元町中華街&to=横浜&kind=1" target="_blank">元町中華街→横浜</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=横浜&to=錦糸町&kind=1" target="_blank">横浜→錦糸町</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=横浜&to=東京&kind=1" target="_blank">横浜→東京</a>
+    </div>
+  </div>
+  <div class="timeline" id="timeline-day2"></div>
+  <button class="add-btn" onclick="openAddModal('day2')">＋ 予定を追加</button>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-panel" id="panel-day3">
+  <div id="now-banner-day3"></div>
+  <div class="day-banner">
+    <div class="day-banner-num">03</div>
+    <div class="day-banner-info">
+      <div class="day-banner-date">NOV 22, 2026 — SUN</div>
+      <div class="day-banner-theme">東京・帰路へ</div>
+    </div>
+  </div>
+  <div class="quick-bar">
+    <div class="quick-bar-label">🚃 よく使う乗換</div>
+    <div class="quick-bar-btns">
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=錦糸町&to=浅草&kind=1" target="_blank">錦糸町→浅草</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=浅草&to=東京&kind=1" target="_blank">浅草→東京駅</a>
+      <a class="qt-btn" href="https://transit.yahoo.co.jp/search/result?from=錦糸町&to=東京&kind=1" target="_blank">錦糸町→東京駅</a>
+    </div>
+  </div>
+  <div class="timeline" id="timeline-day3"></div>
+  <button class="add-btn" onclick="openAddModal('day3')">＋ 予定を追加</button>
+</div>
+
+<!-- TOKYO STATION GUIDE -->
+<div class="day-panel" id="panel-tokyo">
+  <div class="day-banner">
+    <div class="day-banner-num">🚉</div>
+    <div class="day-banner-info">
+      <div class="day-banner-date">DAY 1 着 ／ DAY 3 発</div>
+      <div class="day-banner-theme">東京駅 移動ガイド</div>
+    </div>
+  </div>
+
+  <nav class="ts-sub-nav" id="ts-sub-nav">
+    <button class="ts-sub-btn active" data-tspanel="ts-routes">🚶 移動ルート</button>
+    <button class="ts-sub-btn" data-tspanel="ts-exits">🚪 出口ガイド</button>
+    <button class="ts-sub-btn" data-tspanel="ts-spots">🏛 構内スポット</button>
+    <button class="ts-sub-btn" data-tspanel="ts-tips">💡 ヒント</button>
+  </nav>
+
+  <!-- 移動ルート -->
+  <div class="ts-sub-panel active" id="ts-routes">
+    <div class="ts-trip-banner">
+      <span>🗓</span>
+      <div><strong>この旅での東京駅</strong><br>DAY1 到着（新幹線→横浜）／ DAY3 帰路（つばさ139号 13:00発）</div>
+    </div>
+    <div class="ts-section-head"><span class="ts-section-icon">🚄</span><h2>新幹線ホームから</h2></div>
+    <div class="ts-route-card" onclick="toggleTsCard(this)">
+      <div class="ts-route-card-header">
+        <div class="ts-route-card-title">新幹線ホーム → 横浜（東海道線）</div>
+        <span class="ts-route-card-badge ts-badge-walk">徒歩5分</span>
+      </div>
+      <div class="ts-route-card-toggle">▼ 詳しく見る</div>
+      <div class="ts-route-card-detail">
+        <div class="ts-route-meta">
+          <div class="ts-meta-chip">⏱ <strong>5〜8分</strong></div>
+          <div class="ts-meta-chip">🚶 <strong>乗換のみ</strong></div>
+        </div>
+        <ul class="ts-step-list">
+          <li class="ts-step-item"><div class="ts-step-num">1</div><div class="ts-step-content"><div class="ts-step-text"><strong>新幹線ホーム</strong>を降りて改札方向へ</div><div class="ts-step-note">つばさは東北・山形新幹線の20〜23番線に到着</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">2</div><div class="ts-step-content"><div class="ts-step-text">在来線<strong>中央乗換口</strong>（改札内）を通過</div><div class="ts-step-note">Suica・ICカードそのまま使えます</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">3</div><div class="ts-step-content"><div class="ts-step-text"><span class="line-tag line-tokaido">東海道線</span>のホームへ</div><div class="ts-step-note">7〜10番線。横浜まで約25〜28分</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">4</div><div class="ts-step-content"><div class="ts-step-text">横浜駅で下車</div><div class="ts-step-note">運賃：530円（IC: 528円）</div></div></li>
+        </ul>
+        <a href="https://transit.yahoo.co.jp/search/result?from=東京&to=横浜&y=2026&m=11&d=20&hh=11&m2=5&type=1" target="_blank" class="ts-map-btn">🗺 Yahoo乗換案内で確認</a>
+      </div>
+    </div>
+    <div class="ts-route-card" onclick="toggleTsCard(this)">
+      <div class="ts-route-card-header">
+        <div class="ts-route-card-title">錦糸町 → 東京駅（DAY3朝）</div>
+        <span class="ts-route-card-badge ts-badge-walk">約8分</span>
+      </div>
+      <div class="ts-route-card-toggle">▼ 詳しく見る</div>
+      <div class="ts-route-card-detail">
+        <div class="ts-route-meta">
+          <div class="ts-meta-chip">⏱ <strong>約8分</strong></div>
+          <div class="ts-meta-chip">💴 <strong>200円（IC: 199円）</strong></div>
+        </div>
+        <ul class="ts-step-list">
+          <li class="ts-step-item"><div class="ts-step-num">1</div><div class="ts-step-content"><div class="ts-step-text">錦糸町駅から<span class="line-tag line-sobu">総武線（快速）</span>に乗車</div><div class="ts-step-note">「東京・横須賀線方面」行きに乗車（各駅停車の黄色い総武線は東京駅に行かないので注意）</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">2</div><div class="ts-step-content"><div class="ts-step-text"><strong>東京駅</strong>で下車</div><div class="ts-step-note">地下ホーム1〜4番線に到着</div></div></li>
+        </ul>
+        <a href="https://transit.yahoo.co.jp/search/result?from=錦糸町&to=東京&y=2026&m=11&d=22&hh=11&m2=0&type=1" target="_blank" class="ts-map-btn">🗺 Yahoo乗換案内で確認</a>
+      </div>
+    </div>
+    <div class="ts-section-head"><span class="ts-section-icon">🏛</span><h2>帰路（DAY3）の流れ</h2></div>
+    <div class="ts-tip-card"><strong>DAY3の使い方：</strong>チェックアウト後に錦糸町から東京駅へ。荷物をコインロッカーへ預けて丸の内を散策。12:30頃には新幹線改札へ向かい、つばさ139号（13:00発）に乗車。</div>
+    <div class="ts-route-card" onclick="toggleTsCard(this)">
+      <div class="ts-route-card-header">
+        <div class="ts-route-card-title">コインロッカー → 丸の内南口・KITTE</div>
+        <span class="ts-route-card-badge ts-badge-walk">徒歩3分</span>
+      </div>
+      <div class="ts-route-card-toggle">▼ 詳しく見る</div>
+      <div class="ts-route-card-detail">
+        <ul class="ts-step-list">
+          <li class="ts-step-item"><div class="ts-step-num">1</div><div class="ts-step-content"><div class="ts-step-text">荷物を<strong>コインロッカー</strong>に預ける</div><div class="ts-step-note">八重洲地下・丸の内地下など複数箇所。大型600〜700円</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">2</div><div class="ts-step-content"><div class="ts-step-text"><strong>丸の内南口</strong>から出る</div><div class="ts-step-note">赤レンガ駅舎の正面口。写真スポット</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">3</div><div class="ts-step-content"><div class="ts-step-text">道路を渡り<strong>KITTE</strong>へ</div><div class="ts-step-note">6Fの「KITTEガーデン」から駅舎の絶景撮影</div></div></li>
+        </ul>
+        <a href="https://maps.google.com/?q=KITTE東京" target="_blank" class="ts-map-btn">📍 地図で見る</a>
+      </div>
+    </div>
+    <div class="ts-route-card" onclick="toggleTsCard(this)">
+      <div class="ts-route-card-header">
+        <div class="ts-route-card-title">丸の内 → 新幹線ホーム（帰路）</div>
+        <span class="ts-route-card-badge ts-badge-walk">余裕をもって</span>
+      </div>
+      <div class="ts-route-card-toggle">▼ 詳しく見る</div>
+      <div class="ts-route-card-detail">
+        <div class="ts-alert-badge">⚠ 13:00発 つばさ139号</div>
+        <ul class="ts-step-list">
+          <li class="ts-step-item"><div class="ts-step-num">1</div><div class="ts-step-content"><div class="ts-step-text"><strong>12:30頃</strong>には新幹線改札へ向かう</div><div class="ts-step-note">日曜の昼は駅構内や新幹線改札が混雑。12:30頃には改札へ向かうと安心。</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">2</div><div class="ts-step-content"><div class="ts-step-text"><strong>新幹線中央乗換口</strong>から入場</div><div class="ts-step-note">丸の内・八重洲どちらの改札からでも入れる</div></div></li>
+          <li class="ts-step-item"><div class="ts-step-num">3</div><div class="ts-step-content"><div class="ts-step-text">つばさ139号 <strong>16号車 3番D席</strong></div><div class="ts-step-note">ホーム番号は発車案内で確認。通常20〜23番線</div></div></li>
+        </ul>
+        <a href="https://transit.yahoo.co.jp/search/result?from=東京&to=山形&y=2026&m=11&d=22&hh=12&m2=30&type=1" target="_blank" class="ts-map-btn">🗺 乗換案内で確認</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 出口ガイド -->
+  <div class="ts-sub-panel" id="ts-exits">
+    <div class="ts-section-head"><span class="ts-section-icon">🚪</span><h2>主な出口と行き先</h2></div>
+    <div class="ts-tip-card">東京駅は<strong>丸の内側（西）</strong>と<strong>八重洲側（東）</strong>に分かれています。目的地によって出口を使い分けましょう。</div>
+    <div class="ts-section-head" style="margin-top:8px;"><h2 style="font-size:14px;">🏛 丸の内側（西口）</h2></div>
+    <div class="ts-exit-grid">
+      <div class="ts-exit-item"><div class="ts-exit-name">丸の内南口</div><div class="ts-exit-dest">赤レンガ駅舎の正面<br>KITTE・三菱一号館<br>📸 写真スポット</div></div>
+      <div class="ts-exit-item"><div class="ts-exit-name">丸の内北口</div><div class="ts-exit-dest">大丸東京<br>丸の内ビル・新丸ビル<br>皇居方面</div></div>
+      <div class="ts-exit-item"><div class="ts-exit-name">丸の内地下南口</div><div class="ts-exit-dest">地下鉄丸ノ内線<br>雨の日に便利</div></div>
+      <div class="ts-exit-item"><div class="ts-exit-name">丸の内地下北口</div><div class="ts-exit-dest">地下鉄丸ノ内線<br>グランスタ経由も可</div></div>
+    </div>
+    <div class="ts-section-head" style="margin-top:4px;"><h2 style="font-size:14px;">🏢 八重洲側（東口）</h2></div>
+    <div class="ts-exit-grid">
+      <div class="ts-exit-item"><div class="ts-exit-name">八重洲北口</div><div class="ts-exit-dest">大丸東京<br>高速バス乗り場</div></div>
+      <div class="ts-exit-item"><div class="ts-exit-name">八重洲南口</div><div class="ts-exit-dest">高速バス乗り場<br>タクシー乗り場</div></div>
+      <div class="ts-exit-item"><div class="ts-exit-name">八重洲地下北口</div><div class="ts-exit-dest">グランスタ・エキュート<br>八重洲地下街</div></div>
+      <div class="ts-exit-item"><div class="ts-exit-name">八重洲地下南口</div><div class="ts-exit-dest">大型コインロッカー多め<br>東京シティエアターミナル</div></div>
+    </div>
+    <div class="ts-section-head"><span class="ts-section-icon">🗺</span><h2>構内図・地図リンク</h2></div>
+    <a href="https://www.jreast.co.jp/estation/stations/1039.html" target="_blank" class="ts-map-link-card" style="border:2px solid var(--accent);">
+      <span class="ts-map-link-icon">📋</span><div class="ts-map-link-text"><div class="ts-map-link-title">JR東日本 公式構内図</div><div class="ts-map-link-sub">ホーム配置・エレベーター・トイレ・コインロッカー位置</div></div><span class="ts-map-link-arrow">›</span>
+    </a>
+    <a href="https://www.tokyoinfo.com/access/map/" target="_blank" class="ts-map-link-card">
+      <span class="ts-map-link-icon">🏢</span><div class="ts-map-link-text"><div class="ts-map-link-title">東京駅周辺マップ（TOKYO INFO）</div><div class="ts-map-link-sub">KITTE・グランスタ・八重洲地下街の位置関係</div></div><span class="ts-map-link-arrow">›</span>
+    </a>
+    <a href="https://maps.google.com/?q=東京駅" target="_blank" class="ts-map-link-card">
+      <span class="ts-map-link-icon">🗺</span><div class="ts-map-link-text"><div class="ts-map-link-title">Googleマップで開く</div><div class="ts-map-link-sub">現在地からのルート・ストリートビューも確認可</div></div><span class="ts-map-link-arrow">›</span>
+    </a>
+  </div>
+
+  <!-- 構内スポット -->
+  <div class="ts-sub-panel" id="ts-spots">
+    <div class="ts-section-head"><span class="ts-section-icon">🛍</span><h2>立ち寄りスポット</h2></div>
+    <div class="ts-spot-card"><div class="ts-spot-name">KITTEガーデン（屋上）</div><div class="ts-spot-sub">千代田区丸の内2-7-2 ／ 無料</div><div class="ts-spot-desc">旧東京中央郵便局を改装した商業施設「KITTE」の屋上庭園。丸の内の赤レンガ駅舎を真正面に見渡せる絶景スポット。新幹線の発着も見える。</div><div class="ts-spot-tags"><span class="ts-spot-tag">📸 撮影スポット</span><span class="ts-spot-tag">🆓 無料</span><span class="ts-spot-tag">🏛 駅舎ビュー</span></div></div>
+    <div class="ts-spot-card"><div class="ts-spot-name">駅弁屋 祭（まつり）</div><div class="ts-spot-sub">1階・新幹線改札前エリア ／ 営業 6:00〜22:00頃</div><div class="ts-spot-desc">全国の駅弁が200種以上。山形の「牛肉どまん中」や「米沢牛弁当」も並ぶことが多い。出発前に購入して車内で食べるのがおすすめ。</div><div class="ts-spot-tags"><span class="ts-spot-tag">🍱 お弁当</span><span class="ts-spot-tag">🗾 全国駅弁</span><span class="ts-spot-tag">🚄 新幹線前</span></div></div>
+    <div class="ts-spot-card"><div class="ts-spot-name">グランスタ東京</div><div class="ts-spot-sub">地下1F〜1F・改札内 ／ 営業 8:00〜22:00頃</div><div class="ts-spot-desc">東京駅の地下ショッピングエリア。スイーツ・総菜・雑貨など200店以上。帰りのお土産はここで揃う。混雑する昼は早めに。</div><div class="ts-spot-tags"><span class="ts-spot-tag">🎁 お土産</span><span class="ts-spot-tag">🍰 スイーツ</span><span class="ts-spot-tag">🛍 ショッピング</span></div></div>
+    <div class="ts-spot-card"><div class="ts-spot-name">東京駅一番街</div><div class="ts-spot-sub">地下1F〜1F・八重洲口側</div><div class="ts-spot-desc">キャラクターグッズや東京みやげが集まるゾーン。ポケモン・ジブリ・ジャンプなど定番キャラのショップが並ぶ。</div><div class="ts-spot-tags"><span class="ts-spot-tag">🎮 キャラクター</span><span class="ts-spot-tag">🎁 お土産</span></div></div>
+    <div class="ts-spot-card"><div class="ts-spot-name">東京ステーションホテル ロビー</div><div class="ts-spot-sub">丸の内側・2F（入場自由）</div><div class="ts-spot-desc">1915年創業、赤レンガ駅舎の中に佇む老舗ホテルのロビー。宿泊しなくても見学できる優雅な内装。ドームラウンジはティー利用も可能。</div><div class="ts-spot-tags"><span class="ts-spot-tag">🏛 歴史建築</span><span class="ts-spot-tag">☕ ティーラウンジ</span></div></div>
+  </div>
+
+  <!-- ヒント -->
+  <div class="ts-sub-panel" id="ts-tips">
+    <div class="ts-section-head"><span class="ts-section-icon">💡</span><h2>知っておくと便利なこと</h2></div>
+    <div class="ts-tip-card"><strong>荷物預かり：コインロッカー</strong><br>DAY3は11:00チェックアウト後、荷物をロッカーへ。八重洲南口地下が大型（600〜700円）多め。</div>
+    <div class="ts-tip-card"><strong>新幹線乗り場は「中央のりかえ口」から</strong><br>丸の内・八重洲どちらからでもアクセス可能。在来線から新幹線へ乗り換える場合はICカードのタッチだけで通れます。</div>
+    <div class="ts-tip-card"><strong>丸の内側と八重洲側は駅の中で行き来できます</strong><br>改札内は中央通路で、改札外でも北自由通路（1F）で丸の内〜八重洲を移動可能。外に出なくても反対側へ回れる。</div>
+    <div class="ts-tip-card"><strong>つばさ139号は16号車 3番D席</strong><br>全席指定なので並ぶ必要はなし。乗り場を確認して発車10分前にはホームへ。</div>
+    <div class="ts-tip-card"><strong>週末昼は混雑します</strong><br>日曜の昼は駅構内や新幹線改札が混雑。12:30頃には改札へ向かうと安心。</div>
+    <div class="ts-tip-card"><strong>トイレは改札内が快適</strong><br>改札内トイレは比較的空いていて清潔。乗車前に済ませておくと安心。つばさ号車内にもトイレあり。</div>
+  </div>
+
+</div>
+
+<!-- GOURMET -->
+<div class="day-panel" id="panel-gourmet">
+  <div class="gourmet-section">
+
+    <!-- 食べたいリスト -->
+    <div class="wishlist-section">
+      <div class="wishlist-header">
+        <div class="wishlist-title">🍽 食べたいリスト</div>
+        <button class="wishlist-add-btn" onclick="openWishlistModal()">＋ 追加</button>
+      </div>
+      <div id="wishlist-container"></div>
+    </div>
+
+    <div style="height:1px;background:var(--mist);margin:20px 0;"></div>
+
+    <!-- エリア別おすすめ -->
+    <div style="font-size:10px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;">📍 エリア別おすすめ飲食店</div>
+
+    <!-- 横浜中華街 -->
+    <div class="gourmet-area">
+      <div class="gourmet-area-header">
+        <div class="gourmet-area-icon">🥟</div>
+        <div class="gourmet-area-info">
+          <div class="gourmet-area-label">DAY 1・2 — 山下公園エリア</div>
+          <div class="gourmet-area-name">横浜中華街</div>
+        </div>
+      </div>
+      <div class="gourmet-subhead">🍽 ランチ・ディナー（着席）</div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">福臨閣（ふくりんかく）</div><div class="gourmet-shop-price">ランチ¥990〜 / コース¥5,000〜</div></div>
+        <div class="gourmet-shop-genre">広東料理・点心</div>
+        <div class="gourmet-shop-desc">中華街大通り中央にある、1920年代の租界をイメージした趣ある店内が特徴の老舗。ランチメニューは990円均一で8種類から選べてリーズナブル。手作り点心（小籠包・焼売）の評判が良く、黒酢酢豚も人気。元町・中華街駅2番出口から徒歩5分</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.hotpepper.jp/strJ000718171/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=福臨閣+横浜中華街" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/福臨閣+横浜中華街" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">景徳鎮（けいとくちん）</div><div class="gourmet-shop-price">¥3,500前後 / 担々麺¥1,000前後</div></div>
+        <div class="gourmet-shop-genre">四川料理・本格担々麺</div>
+        <div class="gourmet-shop-desc">中華街市場通り・北門通り周辺にある本場四川料理の名店。10種類以上のスパイスを使った陳麻婆豆腐が看板メニューで、「麻（しびれ）」と「辣（辛さ）」が効いた本格的な味わい。担々麺も同じ四川仕込みのスープがベースで、しっかりとした痺れと旨みがあると評判。辛いもの好きにはたまらない一軒。元町・中華街駅から徒歩5分</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.keitokuchin.co.jp/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=景徳鎮+横浜中華街" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/景徳鎮+横浜中華街" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop premium">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">萬珍樓（まんちんろう）</div><div class="gourmet-shop-price">昼¥4,000〜 / 夜¥7,000〜</div></div>
+        <div class="gourmet-shop-genre">広東料理・老舗</div>
+        <div class="gourmet-shop-desc">明治25年（1892年）創業、130年以上の歴史を持つ中華街の顔的存在。コースは7,000〜21,000円。夜は二胡・洋琴などの生演奏もあり特別な雰囲気。元町・中華街駅から徒歩5分</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.manchinro.com/honten/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=萬珍樓本店+横浜中華街" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/萬珍樓本店+横浜中華街" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+
+      <div class="gourmet-subhead">🥟 食べ歩き</div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">皇朝（こうちょう）</div><div class="gourmet-shop-price">¥1,000〜</div></div>
+        <div class="gourmet-shop-genre">小籠包・食べ歩き</div>
+        <div class="gourmet-shop-desc">食べ歩き小籠包が有名。行列ができることも。テイクアウトで気軽に楽しめる</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=皇朝+横浜中華街" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/皇朝+横浜中華街" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">江戸清（えどせい）</div><div class="gourmet-shop-price">¥500〜</div></div>
+        <div class="gourmet-shop-genre">食べ歩き・肉まん</div>
+        <div class="gourmet-shop-desc">横浜中華街の名物「ブタまん」発祥の店。できたての肉まんを食べ歩きで</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=江戸清+横浜中華街" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">富貴包子楼（ふっきほうしろう）</div><div class="gourmet-shop-price">¥400〜</div></div>
+        <div class="gourmet-shop-genre">食べ歩き・焼き小籠包</div>
+        <div class="gourmet-shop-desc">皇朝とはまた違う、香ばしく焼き上げた焼き小籠包が名物。底はカリッ、中はジューシーな食べ歩きグルメの定番のひとつ</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=富貴包子楼+横浜中華街" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">謝甜記貮号店（しゃてんきにごうてん）</div><div class="gourmet-shop-price">¥500〜</div></div>
+        <div class="gourmet-shop-genre">食べ歩き・点心</div>
+        <div class="gourmet-shop-desc">食べ歩きグルメの定番として紹介されることが多い人気店。点心・茶碗蒸し風スイーツなど種類が豊富で、小腹を満たすのにちょうどいい</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=謝甜記貮号店+横浜中華街" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">老維新（ろういしん）</div><div class="gourmet-shop-price">¥500〜</div></div>
+        <div class="gourmet-shop-genre">食べ歩き・スイーツ</div>
+        <div class="gourmet-shop-desc">黒ごまソフトクリームが名物のスイーツ系食べ歩きの定番店。見た目のインパクトがあり、濃厚な黒ごまの風味が楽しめる。食事系の合間の休憩にぴったり</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=老維新+横浜中華街" target="_blank">📍 地図</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 横浜駅周辺エリア -->
+    <div class="gourmet-area">
+      <div class="gourmet-area-header">
+        <div class="gourmet-area-icon">🐟</div>
+        <div class="gourmet-area-info">
+          <div class="gourmet-area-label">DAY 2 — 横浜駅周辺</div>
+          <div class="gourmet-area-name">横浜駅・横浜スカイビル</div>
+        </div>
+      </div>
+      <div class="gourmet-subhead">🍽 ランチ・ディナー</div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">キンカウーカ</div><div class="gourmet-shop-price">ランチ¥1,500〜 / ディナー¥4,000〜</div></div>
+        <div class="gourmet-shop-genre">アジア料理・エスニック</div>
+        <div class="gourmet-shop-desc">横浜駅周辺の人気アジアンレストラン。東南アジア料理をベースにした多彩なメニューが揃う。カラフルな店内で旅気分をさらに楽しめる</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=キンカウーカ+横浜" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/キンカウーカ+横浜" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">築地食堂 源ちゃん</div><div class="gourmet-shop-price">¥1,000〜¥2,000</div></div>
+        <div class="gourmet-shop-genre">海鮮・定食・居酒屋</div>
+        <div class="gourmet-shop-desc">新鮮な海鮮料理をリーズナブルに楽しめる人気チェーン。ランチの海鮮丼・定食が充実しており、コスパが高いと評判。横浜駅周辺店あり</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=築地食堂源ちゃん+横浜" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/築地食堂源ちゃん+横浜" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">回し寿司活 横浜スカイビル店</div><div class="gourmet-shop-price">¥1,500〜¥3,000</div></div>
+        <div class="gourmet-shop-genre">回転寿司</div>
+        <div class="gourmet-shop-desc">横浜スカイビル内の人気回転寿司。鮮度の高いネタと豊富なメニューで、ランチも夕食も使える便利な立地。横浜駅直結でアクセス◎</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=回し寿司活+横浜スカイビル" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/回し寿司活+横浜スカイビル" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">とと和くら ヨドバシ横浜店</div><div class="gourmet-shop-price">¥1,500〜¥3,500</div></div>
+        <div class="gourmet-shop-genre">和食・海鮮・定食</div>
+        <div class="gourmet-shop-desc">ヨドバシカメラ横浜内の和食レストラン。新鮮な魚介を使った定食・海鮮丼が充実。横浜駅から徒歩すぐで、買い物ついでにも立ち寄りやすい</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=とと和くら+ヨドバシ横浜" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/とと和くら+ヨドバシ横浜" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 元町エリア -->
+    <div class="gourmet-area">
+      <div class="gourmet-area-header">
+        <div class="gourmet-area-icon">☕</div>
+        <div class="gourmet-area-info">
+          <div class="gourmet-area-label">DAY 2 — 元町・山手エリア</div>
+          <div class="gourmet-area-name">元町・山手</div>
+        </div>
+      </div>
+      <div class="gourmet-shop premium">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">ホテルニューグランド ザ・カフェ</div><div class="gourmet-shop-price">¥2,000〜</div></div>
+        <div class="gourmet-shop-genre">カフェ・名物料理</div>
+        <div class="gourmet-shop-desc">ナポリタン・ドリア発祥の店でランチ。クラシックな空間で味わう本家の味</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.hotel-newgrand.co.jp/restaurant/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=ホテルニューグランド+横浜" target="_blank">📍 地図</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- みなとみらいエリア -->
+    <div class="gourmet-area">
+      <div class="gourmet-area-header">
+        <div class="gourmet-area-icon">🏙</div>
+        <div class="gourmet-area-info">
+          <div class="gourmet-area-label">DAY 1 — みなとみらいエリア</div>
+          <div class="gourmet-area-name">赤レンガ・みなとみらい</div>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">横浜ビール 赤レンガ店</div><div class="gourmet-shop-price">¥1,500〜</div></div>
+        <div class="gourmet-shop-genre">クラフトビール・ランチ</div>
+        <div class="gourmet-shop-desc">地元横浜のクラフトビールと港を眺めながらのランチ。赤レンガ倉庫1号館内</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=横浜ビール+赤レンガ倉庫" target="_blank">📍 地図</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 錦糸町・東京駅エリア -->
+    <div class="gourmet-area">
+      <div class="gourmet-area-header">
+        <div class="gourmet-area-icon">🗼</div>
+        <div class="gourmet-area-info">
+          <div class="gourmet-area-label">DAY 3 — 錦糸町・東京駅エリア</div>
+          <div class="gourmet-area-name">錦糸町・東京駅周辺</div>
+        </div>
+      </div>
+
+      <div class="gourmet-subhead">🏨 ホテル内（東武ホテルレバント）</div>
+      <div class="gourmet-shop premium">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">スカイツリービューレストラン 簾（すだれ）</div><div class="gourmet-shop-price">ランチ¥3,000〜 / ディナー¥8,000〜</div></div>
+        <div class="gourmet-shop-genre">日本料理・フレンチ／ホテル24F</div>
+        <div class="gourmet-shop-desc">東武ホテルレバント24階。正面にスカイツリーを望むカウンター席が人気。日本料理・炭火焼フレンチが楽しめる。ランチは寿司天麩羅御膳など。旅の最終日に特別感を演出するならここ</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.tobuhotel.co.jp/levant/restaurant/ren/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=東武ホテルレバント東京+錦糸町" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">中国料理 竹園（ちくえん）</div><div class="gourmet-shop-price">ランチ¥1,500〜 / ディナー¥3,000〜</div></div>
+        <div class="gourmet-shop-genre">中国料理／ホテル2F</div>
+        <div class="gourmet-shop-desc">東武ホテルレバント2階。ランチはお得なセットや麺・飯メニューが豊富。ディナーは海老チリ・辛味麻婆豆腐・担々麺なども。ホテルを出ずに食事できる便利さが◎。個室あり</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.tobuhotel.co.jp/levant/restaurant/chikuen/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=東武ホテルレバント東京+錦糸町" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">ヴェルデュール</div><div class="gourmet-shop-price">ランチビュッフェ¥2,500〜</div></div>
+        <div class="gourmet-shop-genre">ビュッフェ／ホテル内</div>
+        <div class="gourmet-shop-desc">東武ホテルレバント内のビュッフェレストラン。30mのカウンターに色とりどりの料理が並ぶ。ゆっくり食べたいときや量を食べたいときに便利</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.tobuhotel.co.jp/levant/restaurant/verdure/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=東武ホテルレバント東京+錦糸町" target="_blank">📍 地図</a>
+        </div>
+      </div>
+
+      <div class="gourmet-subhead">🚉 駅近（錦糸町・徒歩5分以内）</div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">魚寅鮨</div><div class="gourmet-shop-price">¥2,000〜¥5,000</div></div>
+        <div class="gourmet-shop-genre">寿司・海鮮</div>
+        <div class="gourmet-shop-desc">錦糸町駅南口から徒歩約5分。江東橋エリアにある寿司店（錦糸町魚寅 2階）。産地直送の新鮮な魚介を使った握りが揃う。ランチの握りセットがお得</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=〒130-0022+東京都墨田区江東橋3丁目9-14+錦糸町魚寅" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/〒130-0022+東京都墨田区江東橋3丁目9-14+錦糸町魚寅" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">VALON TOKYO 錦糸町</div><div class="gourmet-shop-price">ランチ¥2,500〜 / ディナー¥5,000〜</div></div>
+        <div class="gourmet-shop-genre">イタリアン・洋食</div>
+        <div class="gourmet-shop-desc">錦糸町駅から徒歩1分。上質な空間でブッラータチーズや上州牛グリルが楽しめるビストロ。ランチ・ディナーともに口コミ評価が高く、旅の締めくくりのディナーにもおすすめ</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=VALON+TOKYO+錦糸町" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/VALON+TOKYO+錦糸町" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">真鯛らーめん 麺魚（めんぎょ）本店</div><div class="gourmet-shop-price">¥1,000〜</div></div>
+        <div class="gourmet-shop-genre">ラーメン・鯛だし</div>
+        <div class="gourmet-shop-desc">錦糸町を代表する人気ラーメン店。真鯛の濃厚な出汁を使った個性的な一杯。ランチタイムは行列必至なため開店直後（11:00〜）がおすすめ</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=麺魚+錦糸町" target="_blank">📍 地図</a>
+          <a class="gourmet-shop-btn" href="https://www.google.com/maps/dir/現在地/麺魚+錦糸町" target="_blank">🗺 ルート</a>
+        </div>
+      </div>
+
+      <div class="gourmet-subhead">🏛 東京駅周辺</div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">駅弁屋 祭（まつり）</div><div class="gourmet-shop-price">¥1,000〜</div></div>
+        <div class="gourmet-shop-genre">駅弁・テイクアウト</div>
+        <div class="gourmet-shop-desc">東京駅構内・全国の有名駅弁が200種以上揃う名所。新幹線に乗る前にここで調達すれば車内でゆっくり食べられる。選ぶ楽しさも旅の醍醐味</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=駅弁屋祭+東京駅" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop premium">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">グランスタ東京 各店</div><div class="gourmet-shop-price">¥1,000〜</div></div>
+        <div class="gourmet-shop-genre">スイーツ・お土産・軽食</div>
+        <div class="gourmet-shop-desc">東京駅構内の商業エリア。PRESS BUTTER SAND・東京ばな奈・ヒトツブカンロなど東京限定スイーツが集まる。出発前のお土産調達に最適。構内なので雨でも安心</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.gransta.jp/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=グランスタ東京" target="_blank">📍 地図</a>
+        </div>
+      </div>
+      <div class="gourmet-shop budget">
+        <div class="gourmet-shop-top"><div class="gourmet-shop-name">東京ソラマチ フードコート</div><div class="gourmet-shop-price">¥800〜</div></div>
+        <div class="gourmet-shop-genre">フードコート・多様</div>
+        <div class="gourmet-shop-desc">スカイツリー直結の商業施設。ラーメン・寿司・スイーツなど多様なジャンルが揃う。錦糸町ホテルから徒歩圏内でランチに便利</div>
+        <div class="gourmet-shop-btns">
+          <a class="gourmet-shop-btn" href="https://www.tokyo-solamachi.jp/" target="_blank">🌐 公式</a>
+          <a class="gourmet-shop-btn" href="https://maps.google.com/?q=東京ソラマチ" target="_blank">📍 地図</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INFO -->
+<div class="day-panel" id="panel-info">
+  <div class="info-section">
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <div class="info-card-block" style="flex:1;">
+        <div class="info-card-label">出発</div>
+        <div class="info-card-value">山形 9:00<br><small style="font-size:11px;opacity:.6">つばさ132号</small></div>
+      </div>
+      <div class="info-card-block" style="flex:1;">
+        <div class="info-card-label">帰路</div>
+        <div class="info-card-value">東京 13:00<br><small style="font-size:11px;opacity:.6">つばさ139号</small></div>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <div class="hotel-night">1泊目 — NOV 20</div>
+      <div class="hotel-name">ホテルニューグランド</div>
+      <div class="hotel-note">山下公園隣接の老舗クラシックホテル<br>最寄：みなとみらい線「元町・中華街駅」1番出口 徒歩約1分<br>ナポリタン・ドリア発祥の地としても有名</div>
+      <div class="checkin-bar">
+        <div class="checkin-item in">
+          <div class="checkin-label">チェックイン</div>
+          <div class="checkin-time">14:00〜</div>
+        </div>
+        <div class="checkin-divider">|</div>
+        <div class="checkin-item out">
+          <div class="checkin-label">チェックアウト</div>
+          <div class="checkin-time">〜11:00</div>
+        </div>
+        <div class="checkin-note">※公式FAQより。プランにより異なる場合あり</div>
+      </div>
+      <div class="hotel-big-btns">
+        <a class="big-btn map" href="https://maps.google.com/?cid=16412194114761053098" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">📍</span>地図</a>
+        <a class="big-btn hotel" href="https://www.hotel-newgrand.co.jp/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🌐</span>公式サイト</a>
+        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/ホテルニューグランド横浜" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🗺</span>ルート</a>
+      </div>
+    </div>
+    <div class="hotel-card">
+      <div class="hotel-night">2泊目 — NOV 21</div>
+      <div class="hotel-name">東武ホテルレバント東京</div>
+      <div class="hotel-note">JR錦糸町駅 北口から徒歩約3分（半蔵門線は3番出口から徒歩約3分）<br>スカイツリーまで約1.5km・外観は周辺から眺められる</div>
+      <div class="checkin-bar">
+        <div class="checkin-item in">
+          <div class="checkin-label">チェックイン</div>
+          <div class="checkin-time">15:00〜</div>
+        </div>
+        <div class="checkin-divider">|</div>
+        <div class="checkin-item out">
+          <div class="checkin-label">チェックアウト</div>
+          <div class="checkin-time">〜11:00</div>
+        </div>
+        <div class="checkin-note">※公式FAQより。プランにより異なる場合あり</div>
+      </div>
+      <div class="hotel-big-btns">
+        <a class="big-btn map" href="https://maps.google.com/maps?q=東武ホテルレバント東京" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">📍</span>地図</a>
+        <a class="big-btn hotel" href="https://www.tobuhotel.co.jp/levant/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🌐</span>公式サイト</a>
+        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/東武ホテルレバント東京" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:20px;">🗺</span>ルート</a>
+      </div>
+    </div>
+    <div class="tips-block">
+      <div class="tips-title">TIPS</div>
+      <div class="tip-item"><span>🍂</span><div class="tip-text">11月下旬はホテル前の山下公園通りの銀杏並木が色づく頃。夜の散歩でも楽しめる</div></div>
+      <div class="tip-item"><span>⏰</span><div class="tip-text">DAY3は11:00チェックアウト→13:00発つばさ139号。12:30頃には新幹線改札へ</div></div>
+      <div class="tip-item"><span>🥟</span><div class="tip-text">中華街の土曜は大混雑。11:30前か13:30以降が狙い目</div></div>
+      <div class="tip-item"><span>🏨</span><div class="tip-text">ニューグランドの名物はナポリタン・ドリア。ランチでも食べられる</div></div>
+      <div class="tip-item"><span>🗼</span><div class="tip-text">スカイツリーは錦糸町・ホテル周辺から外観を眺めるだけでOK</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- WISHLIST MODAL -->
+<div class="modal-overlay" id="modal-sync">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">共有・編集の設定</div>
+      <button class="modal-close" onclick="closeSyncModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="sync-status-line" id="sync-status-line"></div>
+      <div class="form-group">
+        <div class="form-label">GITHUB アクセストークン</div>
+        <input class="form-input" id="sync-token" type="password" autocomplete="off" placeholder="github_pat_…">
+      </div>
+      <div class="sync-help">
+        トークンを入れた端末だけが編集でき、保存すると同行者全員のしおりに反映されます。トークンはこの端末のブラウザにだけ保存されます。人には教えないでください。
+        <ol>
+          <li>GitHub の Settings → Developer settings → Personal access tokens → <b>Fine-grained tokens</b> → Generate new token</li>
+          <li>Repository access：<b>Only select repositories</b> → <code>travel-shiori-mobile</code></li>
+          <li>Permissions → Repository permissions → <b>Contents：Read and write</b></li>
+          <li>有効期限は旅行後の日付に。発行されたトークンを上に貼り付け</li>
+        </ol>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="forgetToken()">トークン削除</button>
+      <button class="btn-secondary" onclick="reloadRemote(true)">最新を読込</button>
+      <button class="btn-primary" onclick="saveToken()">保存</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="modal-wishlist">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="wishlist-modal-title">食べたいお店を追加</div>
+      <button class="modal-close" onclick="closeWishlistModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <div class="form-label">お店の名前</div>
+        <input class="form-input" id="wl-name" type="text" placeholder="例：聘珍樓">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">エリア</div>
+          <input class="form-input" id="wl-area" type="text" placeholder="例：中華街">
+        </div>
+        <div class="form-group">
+          <div class="form-label">予算目安</div>
+          <input class="form-input" id="wl-price" type="text" placeholder="例：¥2,000〜">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">メモ</div>
+        <textarea class="form-textarea" id="wl-memo" placeholder="食べたいもの・営業時間など"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Googleマップ URL（任意）</div>
+        <input class="form-input" id="wl-url" type="url" placeholder="https://maps.google.com/...">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeWishlistModal()">キャンセル</button>
+      <button class="btn-primary" id="wl-save-btn" onclick="saveWishlistItem()">追加する</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="modal-add">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-add-title">予定を追加</div>
+      <button class="modal-close" onclick="closeAddModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group" style="max-width:90px;">
+          <div class="form-label">時間</div>
+          <input class="form-input" id="input-time" type="text" placeholder="13:00">
+        </div>
+        <div class="form-group">
+          <div class="form-label">タイトル</div>
+          <input class="form-input" id="input-title" type="text" placeholder="場所・内容">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">メモ</div>
+        <textarea class="form-textarea" id="input-desc" placeholder="補足・メモ"></textarea>
+      </div>
+      <div class="form-group">
+        <div class="form-label">リンク</div>
+        <div id="link-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"></div>
+        <button type="button" onclick="addLinkRow()" style="width:100%;padding:9px;background:none;border:1px dashed #c9a96e;border-radius:4px;color:#c9a96e;font-size:12px;letter-spacing:2px;cursor:pointer;">＋ リンクを追加</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeAddModal()">キャンセル</button>
+      <button class="btn-primary" id="btn-save" onclick="saveItem()">追加する</button>
+    </div>
+  </div>
+</div>
+
+<!-- GUIDE MODAL -->
+<div class="modal-overlay" id="modal-guide">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="guide-modal-title">ガイド</div>
+      <button class="modal-close" onclick="closeGuideModal()">✕</button>
+    </div>
+    <div class="modal-body" id="guide-modal-body"></div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-item active" data-nav="day1" onclick="switchTab('day1')"><div class="nav-icon">🗓</div>DAY 1</div>
+  <div class="nav-item" data-nav="day2" onclick="switchTab('day2')"><div class="nav-icon">🗓</div>DAY 2</div>
+  <div class="nav-item" data-nav="day3" onclick="switchTab('day3')"><div class="nav-icon">🗓</div>DAY 3</div>
+  <div class="nav-item" data-nav="gourmet" onclick="switchTab('gourmet')"><div class="nav-icon">🍴</div>グルメ</div>
+  <div class="nav-item" data-nav="info" onclick="switchTab('info')"><div class="nav-icon">ℹ️</div>INFO</div>
+</div>
+
+<script>
+// =============================================
+// GUIDE DATA: 移動・観光スポット詳細
+// =============================================
+const GUIDES = {
+  'transit-tokyo-yokohama': {
+    title: '🚃 東京駅→横浜駅 乗換ガイド',
+    content: `
+      <div class="guide-section">
+        <div class="guide-section-title">おすすめルート</div>
+        <div class="guide-row"><div class="guide-row-icon">🚉</div><div class="guide-row-text"><strong>JR東海道線</strong><br>東京駅 → 横浜駅｜約25〜28分｜乗換なし<br>料金：<strong>1人530円 / 2人1,060円（IC 528円）</strong>（Suica可）</div></div>
+        <div class="guide-row"><div class="guide-row-icon">💡</div><div class="guide-row-text">東京駅では<strong>7〜10番線（東海道線・上野東京ライン）</strong>へ。<br>本数が多く、どの列車でも横浜に停車。</div></div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">その他のルート</div>
+        <div class="guide-row"><div class="guide-row-icon">🚇</div><div class="guide-row-text">横須賀線：東京駅（地下・総武横須賀線ホーム）→横浜駅 約30分・乗換なし</div></div>
+        <div class="guide-row"><div class="guide-row-icon">🚇</div><div class="guide-row-text">京浜東北線：やや時間がかかる。本数は多い</div></div>
+      </div>
+      <div class="guide-big-btns">
+        <a class="guide-big-btn transit" href="https://transit.yahoo.co.jp/search/result?from=東京&to=横浜&kind=1" target="_blank">🚃 Yahoo!乗換案内</a>
+        <a class="guide-big-btn map" href="https://www.google.com/maps/dir/現在地/横浜駅" target="_blank">🗺 ルート案内</a>
+      </div>
+      <div class="guide-big-btns" style="margin-top:6px;">
+        <a class="guide-big-btn map" href="https://maps.google.com/?q=横浜駅&ll=35.4658,139.6203" target="_blank">📍 横浜駅の地図</a>
+      </div>
+    `
+  },
+  'transit-yokohama-hotel': {
+    title: '🏨 横浜駅→ホテルニューグランド',
+    content: `
+      <div class="guide-section">
+        <div class="guide-section-title">電車利用（おすすめ）</div>
+        <div class="guide-row"><div class="guide-row-icon">🚇</div><div class="guide-row-text"><strong>みなとみらい線</strong><br>横浜駅 → 元町・中華街駅｜約8分｜5駅目（終点）<br>料金：Yahoo!乗換案内で確認｜駅からホテルまで徒歩約1分</div></div>
+        <div class="guide-row"><div class="guide-row-icon">🚪</div><div class="guide-row-text"><strong>1番出口（山下公園口）</strong>を出て目の前がホテル（徒歩約1分）</div></div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">タクシー利用</div>
+        <div class="guide-row"><div class="guide-row-icon">🚕</div><div class="guide-row-text">横浜駅東口タクシー乗り場から約10分<br>料金目安：1,200〜1,500円（タクシー1台・2人乗車）</div></div>
+      </div>
+      <div class="guide-big-btns">
+        <a class="guide-big-btn transit" href="https://transit.yahoo.co.jp/search/result?from=横浜&to=元町中華街&kind=1" target="_blank">🚃 Yahoo!乗換案内</a>
+        <a class="guide-big-btn map" href="https://www.google.com/maps/dir/現在地/ホテルニューグランド横浜" target="_blank">🗺 ルート案内</a>
+      </div>
+      <div class="guide-big-btns" style="margin-top:6px;">
+        <a class="guide-big-btn map" href="https://maps.google.com/?q=ホテルニューグランド&ll=35.4448,139.6496" target="_blank">📍 ホテルの地図</a>
+        <a class="guide-big-btn map" href="https://maps.google.com/?q=元町中華街駅&ll=35.4437,139.6524" target="_blank">📍 元町中華街駅</a>
+      </div>
+    `
+  },
+  'spot-yamashita': {
+    title: '🚢 山下公園',
+    content: `
+      <div class="guide-section">
+        <div class="guide-section-title">スポット情報</div>
+        <div class="guide-row"><div class="guide-row-icon">📍</div><div class="guide-row-text"><strong>見どころ</strong><br>横浜港を望む日本最初の西洋式公園。氷川丸（国の重要文化財）が係留されている。バラ園も有名</div></div>
+        <div class="guide-row"><div class="guide-row-icon">⏰</div><div class="guide-row-text"><strong>おすすめ滞在時間</strong>：30〜60分<br>24時間開園・入場無料</div></div>
+        <div class="guide-row"><div class="guide-row-icon">📸</div><div class="guide-row-text"><strong>写真スポット</strong><br>氷川丸と横浜港の組み合わせ。夕暮れ時は港の景色が絶景</div></div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">次の目的地へ</div>
+        <div class="guide-row"><div class="guide-row-icon">➡️</div><div class="guide-row-text"><strong>ホテルニューグランド</strong>：公園内から徒歩約2分（公園に隣接）<br><strong>中華街</strong>：徒歩約5分</div></div>
+      </div>
+      <div class="guide-big-btns">
+        <a class="guide-big-btn map" href="https://maps.google.com/?q=山下公園横浜&ll=35.4458,139.6498" target="_blank">📍 地図を開く</a>
+        <a class="guide-big-btn transit" href="https://www.google.com/maps/dir/現在地/山下公園+横浜市" target="_blank">🗺 ルート案内</a>
+      </div>
+      <div class="rain-alt">
+        <div class="rain-alt-title">雨天時の代替・プランB</div>
+        <div class="rain-alt-item"><div class="rain-alt-icon">🏨</div><div class="rain-alt-text"><strong>ホテルニューグランドのロビー・カフェ</strong><br>すぐ隣のホテルでティータイム。クラシカルな雰囲気の中でゆっくりできる</div></div>
+        <div class="rain-alt-item"><div class="rain-alt-icon">🎎</div><div class="rain-alt-text"><strong>横浜人形の家</strong>（徒歩約3分）<br>世界各国の人形約1万点を展示。山下公園すぐ隣の屋内施設。入館料600円<br><a class="rain-alt-link" href="https://maps.google.com/?q=横浜人形の家&ll=35.4437,139.6517" target="_blank">📍 地図</a></div></div>
+        <div class="rain-alt-item"><div class="rain-alt-icon">🥟</div><div class="rain-alt-text"><strong>横浜中華街へ繰り上げ</strong>（徒歩5分）<br>雨でも全天候で楽しめる中華街で時間をつぶすのも◎</div></div>
+      </div>
+      <div class="guide-big-btns" style="margin-top:6px;">
+        <a class="guide-big-btn transit" href="https://www.google.com/maps/dir/山下公園/ホテルニューグランド横浜" target="_blank">➡ 次：ホテルへ</a>
+        <a class="guide-big-btn map" href="https://www.google.com/maps/dir/山下公園/横浜中華街" target="_blank">➡ 次：中華街へ</a>
+      </div>
+    `
+  },
+  'spot-chinatown': {
+    title: '🥟 横浜中華街',
+    content: `
+      <div class="guide-section">
+        <div class="guide-section-title">スポット情報</div>
+        <div class="guide-row"><div class="guide-row-icon">📍</div><div class="guide-row-text"><strong>見どころ</strong><br>日本最大の中華街。10の門（牌楼）、約600店舗。関帝廟も見どころのひとつ</div></div>
+        <div class="guide-row"><div class="guide-row-icon">⏰</div><div class="guide-row-text"><strong>おすすめ滞在時間</strong>：60〜90分<br>多くの店舗：11:00〜21:00頃</div></div>
+        <div class="guide-row"><div class="guide-row-icon">🍴</div><div class="guide-row-text"><strong>おすすめグルメ</strong><br>食べ歩き（肉まん・小籠包）、点心ランチ、北京ダック。土曜混雑は11:30前か13:30以降が狙い目</div></div>
+        <div class="guide-row"><div class="guide-row-icon">📸</div><div class="guide-row-text"><strong>写真スポット</strong><br>善隣門（朱雀門）前。夜のライトアップも綺麗</div></div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-section-title">次の目的地へ</div>
+        <div class="guide-row"><div class="guide-row-icon">➡️</div><div class="guide-row-text"><strong>ホテルニューグランド</strong>：徒歩約5分<br><strong>山下公園</strong>：徒歩約5分<br><strong>元町ショッピングストリート</strong>：徒歩約5分</div></div>
+      </div>
+      <div class="guide-big-btns">
+        <a class="guide-big-btn map" href="https://maps.google.com/?q=横浜中華街&ll=35.4431,139.6441" target="_blank">📍 地図を開く</a>
+        <a class="guide-big-btn transit" href="https://www.google.com/maps/dir/現在地/横浜中華街" target="_blank">🗺 ルート案内</a>
+      </div>
+      <div class="rain-alt">
+        <div class="rain-alt-title">雨天時の代替・プランB</div>
+        <div class="rain-alt-item"><div class="rain-alt-icon">🥟</div><div class="rain-alt-text"><strong>中華街（そのまま）</strong><br>飲食店・土産物店はほぼ屋内。雨天でも食べ歩きより着席スタイルに切り替えればほぼ問題なし</div></div>
+        <div class="rain-alt-item"><div class="rain-alt-icon">🔮</div><div class="rain-alt-text"><strong>横浜媽祖廟・関帝廟の参拝</strong><br>中華街内の廟（無料）。屋根があり、雨の日の参拝も風情がある</div></div>
+        <div class="rain-alt-item"><div class="rain-alt-icon">🐟</div><div class="rain-alt-text"><strong>横浜・八景島シーパラダイス</strong>（電車で約30分）<br>大型水族館。完全屋内エリアで雨でも1日楽しめる。遠いが雨が強い場合の有力候補<br><a class="rain-alt-link" href="https://www.seaparadise.co.jp/" target="_blank">🌐 公式サイト</a></div></div>
+      </div>
+      <div class="guide-big-btns" style="margin-top:6px;">
+        <a class="guide-big-btn transit" href="https://www.google.com/maps/dir/横浜中華街/ホテルニューグランド横浜" target="_blank">➡ 次：ホテルへ</a>
+        <a class="guide-big-btn map" href="https://www.google.com/maps/dir/横浜中華街/山下公園" target="_blank">➡ 次：山下公園へ</a>
+      </div>
+    `
+  },
+};
+
+// =============================================
+// SCHEDULE DATA
+// =============================================
+const defaultData = {
+  day1: [
+    { id:'d1-0', time:'8:00頃', title:'自宅出発 🏠', desc:'駅まで約1時間を見て出発', type:'normal', links:[] },
+    { id:'d1-1', time:'9:00', title:'山形駅出発 🚄', desc:'🚄 山形新幹線 つばさ132号 東京行\n🕘 9:00発 → 11:48着（168分）\n📍 山形駅 → 東京駅\n🪑 12号車 4番D席', type:'train', links:[] },
+    { id:'d1-2', time:'11:48', title:'東京駅到着 → 横浜へ乗り換え', desc:'JR東海道線で横浜へ約25〜28分\n\n🚉 東京駅（JR東海道線 7〜10番線）乗車\n　↓ JR東海道線（横浜方面）約25〜28分\n🔁 横浜駅 下車', type:'transit', guideKey:'transit-tokyo-yokohama', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E6%9D%B1%E4%BA%AC&to=%E6%A8%AA%E6%B5%9C'}] },
+    { id:'d1-3', time:'12:20頃', title:'横浜駅 → ホテルへ 🚃', desc:'みなとみらい線に乗り換えてホテルへ荷物を預けに\n💡 チェックインは14:00〜のため、まず荷物を預けて観光へ\n\n🚉 横浜駅（みなとみらい線）乗車\n　↓ みなとみらい線（元町・中華街方面）約5分\n🏨 元町・中華街駅 下車 → 1番出口からホテルへ徒歩1分', type:'transit', guideKey:'transit-yokohama-hotel', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E6%A8%AA%E6%B5%9C&to=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97'}] },
+    { id:'d1-4', time:'13:00', title:'ランチ｜王府井レストラン 🍚', desc:'横浜中華街の老舗レストラン。本格中華をゆっくり楽しむ\n到着後は無理せずゆっくりランチ。新幹線の疲れを癒しながら', type:'spot', guideKey:'spot-chinatown', nextDest:'ホテルニューグランド（徒歩約5分）', mapQuery:'王府井 横浜中華街', links:[{label:'王府井 地図',url:'https://maps.google.com/?q=王府井+横浜中華街'}] },
+    { id:'d1-5', time:'14:00', title:'ホテルニューグランド チェックイン 🏨', desc:'チェックイン：14:00〜 ／ チェックアウト：〜11:00\n部屋に荷物を置いてひと休み', type:'hotel', highlight:true, links:[{label:'公式',url:'https://www.hotel-newgrand.co.jp/'},{label:'地図',url:'https://maps.google.com/?cid=16412194114761053098'}] },
+    { id:'d1-6', time:'15:30', title:'横浜大世界 🏯', desc:'ホテルから徒歩約5分。中華街最大級のエンタメ施設\nお土産・雑貨・グルメがまとまっていて雨でも楽しめる', type:'spot', links:[{label:'横浜大世界 公式',url:'https://www.daska.jp/'},{label:'地図',url:'https://maps.google.com/?q=横浜大世界'}] },
+    { id:'d1-7', time:'16:30頃', title:'橫濱媽祖廟 🏮', desc:'横浜大世界のすぐそば。中華街のシンボル的なお廟\n朱色の廟が美しく、参拝もできる。写真スポットとしても人気', type:'spot', nextDest:'夕食｜萬珍樓（中華街内）', links:[{label:'媽祖廟 公式',url:'https://www.yokohama-masobyo.jp/'},{label:'地図',url:'https://maps.google.com/?q=横浜媽祖廟'}] },
+    { id:'d1-8', time:'18:00', title:'夕食｜萬珍樓 🏮', desc:'ホテルから徒歩約5分。予約済み 18:00〜\n中華街を代表する老舗広東料理店', type:'spot', highlight:true, links:[{label:'萬珍樓 公式',url:'https://www.manchinro.com/honten/'},{label:'地図',url:'https://maps.google.com/?q=萬珍樓本店+横浜中華街'}] },
+    { id:'d1-9', time:'20:30頃', title:'山下公園 夜景散歩 🌃', desc:'ホテルすぐ横。夜の港をのんびり散歩\n氷川丸・ベイブリッジのライトアップを眺めながら', type:'spot', guideKey:'spot-yamashita', mapQuery:'山下公園 横浜', links:[] },
+  ],
+  day2: [
+    { id:'d2-1', time:'〜11:00', title:'ホテルニューグランド チェックアウト 🏨', desc:'朝食・部屋でゆっくり → チェックアウト（〜11:00）\nチェックアウト後は荷物を預けてホテル探索へ', type:'hotel', links:[{label:'ホテル公式',url:'https://www.hotel-newgrand.co.jp/'}] },
+    { id:'d2-2', time:'11:00〜12:00', title:'ホテル本館を見て回る 🏛', desc:'ロビーや階段など、クラシックな雰囲気を楽しむ\nホテル内の写真を撮る', type:'spot', links:[] },
+    { id:'d2-3', time:'12:00〜13:30', title:'昼食 🍽', desc:'', type:'spot', nextDest:'ホテルニューグランド（荷物受け取り）', links:[] },
+    { id:'d2-4', time:'13:30〜14:00', title:'荷物を受け取る 🏨', desc:'ホテルへ戻って預けた荷物を受け取る', type:'normal', links:[] },
+    { id:'d2-5a', time:'14:00頃', title:'【A案】横浜 → 錦糸町 🚃', desc:'先に錦糸町のホテルへ荷物を預けてから東京駅へ向かう場合\n元町・中華街駅から錦糸町まで約55分\n\n🚉 元町・中華街（みなとみらい線）乗車\n　↓ 横浜 乗り換え（JR横須賀線・総武快速線 直通 千葉方面）\n　※東京止まりなら東京駅地下ホームで総武快速線に乗り換え\n🏨 錦糸町 下車（北口）→ ホテルへ荷物を預ける', type:'transit', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97&to=%E9%8C%A6%E7%B3%B8%E7%94%BA'}] },
+    { id:'d2-5b', time:'14:00頃', title:'【B案】横浜 → 東京駅 🚃', desc:'東京駅に直接向かう場合（荷物はコインロッカーへ）\n元町・中華街駅から東京駅まで約50分\n\n🚉 元町・中華街（みなとみらい線）乗車\n　↓ 横浜 乗り換え（JR東海道線）\n🏛 東京駅 下車 → 丸の内口へ\n※荷物：東京駅構内のコインロッカーを利用', type:'transit', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97&to=%E6%9D%B1%E4%BA%AC'}] },
+    { id:'d2-5c', time:'14:00頃', title:'【C案】山下公園 → 横浜駅（シーバス） ⛴', desc:'荷物を受け取ったら山下公園からシーバス（観光船）で横浜駅東口へ\n海から横浜の景色を楽しみながら移動できる観光ルート\n\n⛴ 山下公園さん橋 乗船\n　↓ シーバス 約20分〜（寄港する便は長め。料金・所要は公式で要確認）\n🚉 横浜駅東口 下船 → JRで錦糸町（A案）または東京駅（B案）へ\n\n※要事前に時刻確認（運行本数が少ない場合あり）', type:'transit', links:[{label:'シーバス公式',url:'https://www.welcome.city.yokohama.jp/topics/tp_detail.php?tpid=T03915'},{label:'Yahoo乗り換え（横浜→錦糸町）',url:'https://transit.yahoo.co.jp/search/result?from=%E6%A8%AA%E6%B5%9C&to=%E9%8C%A6%E7%B3%B8%E7%94%BA'}] },
+    { id:'d2-6a', time:'15:15頃', title:'【A案】錦糸町 → 東京駅へ 🚃', desc:'ホテルに荷物を預けたらすぐ東京駅へ（錦糸町着は15:00前後の見込み）\n\n🚉 錦糸町駅（JR総武快速線）乗車\n　↓ JR総武快速線（東京方面）約8分\n🏛 東京駅 下車 → 丸の内口へ', type:'transit', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E9%8C%A6%E7%B3%B8%E7%94%BA&to=%E6%9D%B1%E4%BA%AC'}] },
+    { id:'d2-6', time:'15:30〜18:00', title:'東京駅・丸の内を楽しむ 🏛', desc:'📍 丸の内駅舎を外から眺める（赤レンガ・重要文化財）\n🌿 KITTEガーデン屋上（無料・駅舎を一望できる絶景スポット）\n🌿 丸の内エリアをぶらぶら', type:'spot', links:[{label:'KITTE地図',url:'https://www.google.com/maps/search/KITTE+東京'}] },
+    { id:'d2-6b', time:'18:00頃', title:'東京駅 → 錦糸町 移動 🚃', desc:'【A案・B案 共通】ホテルへ戻る\n💼 B案の場合：先に東京駅のコインロッカーから荷物を取り出す\n\n🚉 東京駅（JR総武快速線）乗車\n　↓ JR総武快速線（千葉方面）約8分\n🏨 錦糸町駅 下車 → ホテルへ', type:'transit', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E6%9D%B1%E4%BA%AC&to=%E9%8C%A6%E7%B3%B8%E7%94%BA'}] },
+    { id:'d2-7', time:'18:30頃', title:'東武ホテルレバント東京 チェックイン 🏨', desc:'東武ホテルレバント東京にチェックイン\nチェックイン：15:00〜 ／ チェックアウト：〜11:00', type:'hotel', highlight:true, links:[{label:'ホテル公式',url:'https://www.tobuhotel.co.jp/levant/'},{label:'地図',url:'https://maps.google.com/maps?q=東武ホテルレバント東京'}] },
+  ],
+  day3: [
+    { id:'d3-1', time:'朝食', title:'朝食｜東武ホテルレバント 🍳', desc:'手配済み。ゆっくり食べてチェックアウトへ', type:'normal', links:[] },
+    { id:'d3-2', time:'〜11:00', title:'チェックアウト 🏨', desc:'チェックアウト：〜11:00\n※疲れていればレイトチェックアウト（有料）も相談可', type:'normal', links:[{label:'ホテルTEL',url:'tel:0356115511'}] },
+    { id:'d3-3', time:'11:00〜', title:'錦糸町 → 東京駅へ 🚃', desc:'錦糸町駅（JR総武快速線）→ 東京駅（約8分）\n🚉 錦糸町駅（JR総武快速ホーム）から乗車\n　↓ JR総武快速線（千葉→東京方面）\n　↓ 約8分\n🏛 東京駅 着（丸の内口へ）', type:'transit', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E9%8C%A6%E7%B3%B8%E7%94%BA&to=%E6%9D%B1%E4%BA%AC'}] },
+    { id:'d3-4', time:'11:30〜', title:'東京駅周辺で過ごす 🏛', desc:'⏰ 12:30頃には新幹線改札へ向かう', type:'normal', links:[] },
+    { id:'d3-6', time:'13:00', title:'東京駅出発 🚄', desc:'🚄 山形新幹線 つばさ139号 山形行\n🕐 13:00発 → 15:50着\n📍 東京駅 → 山形駅\n🪑 16号車 3番D席', type:'train', highlight:true, links:[] },
+    { id:'d3-7', time:'15:50', title:'山形駅到着', desc:'お疲れさまでした！', type:'normal', links:[] },
+    { id:'d3-8', time:'16:50頃', title:'自宅到着 🏠', desc:'駅から約1時間', type:'normal', links:[] },
+  ]
+};
+
+function esc(s){ if(s==null) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+if(location.search.includes('reset=1')){
+  try{ localStorage.removeItem('shiori-mobile-cache'); }catch(e){}
+  location.replace(location.pathname);
+}
+function loadJSON(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return v ? JSON.parse(v) : structuredClone(fallback);
+  } catch(e) {
+    return structuredClone(fallback);
+  }
+}
+// =============================================
+// SHARED STORAGE (GitHub data.json)
+// =============================================
+const GH_REPO = 'pmklmq-eng/travel-shiori-mobile';
+const GH_FILE = 'data.json';
+const GH_BRANCH = 'main';
+const CACHE_KEY = 'shiori-mobile-cache';
+const TOKEN_KEY = 'shiori-mobile-token';
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function lsDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function getToken(){ return lsGet(TOKEN_KEY) || ''; }
+
+const cached = loadJSON(CACHE_KEY, null);
+let scheduleData = (cached && cached.schedule) ? cached.schedule : structuredClone(defaultData);
+let remoteSha = cached ? (cached.sha || null) : null;
+let dirty = !!(cached && cached.dirty);
+let pushTimer = null, pushing = false, lastSyncMsg = '';
+
+function b64EncodeUtf8(str){ const bytes=new TextEncoder().encode(str); let bin=''; for(let i=0;i<bytes.length;i+=0x8000){ bin+=String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000)); } return btoa(bin); }
+function b64DecodeUtf8(b64){ const bin=atob(b64.replace(/\s/g,'')); const bytes=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
+function ghHeaders(){ const h={'Accept':'application/vnd.github+json'}; const t=getToken(); if(t) h['Authorization']='Bearer '+t; return h; }
+function writeCache(){ lsSet(CACHE_KEY, JSON.stringify({schedule:scheduleData, wishlist:(typeof wishlistData!=='undefined'?wishlistData:[]), sha:remoteSha, dirty})); }
+
+function setSync(state, text){
+  lastSyncMsg = text;
+  const pill=document.getElementById('sync-pill'); if(!pill) return;
+  pill.className='sync-pill '+state; pill.textContent=text;
+  const line=document.getElementById('sync-status-line'); if(line) line.textContent=text;
+}
+function refreshMode(){
+  document.body.classList.toggle('view-only', !getToken());
+}
+function idleStatus(){
+  if(!getToken()) setSync('', '👀 閲覧のみ（タップで編集設定）');
+  else if(dirty) setSync('warn', '⚠️ 未保存の変更あり（タップ）');
+  else setSync('ok', '☁️ 共有済み');
+}
+
+async function fetchRemote(){
+  const url='https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE+'?ref='+GH_BRANCH+'&_='+Date.now();
+  const r=await fetch(url,{headers:ghHeaders(),cache:'no-store'});
+  if(r.status===404) return {sha:null, data:null};
+  if(!r.ok) throw new Error('HTTP '+r.status);
+  const j=await r.json();
+  return {sha:j.sha, data:JSON.parse(b64DecodeUtf8(j.content))};
+}
+
+async function reloadRemote(force){
+  if(dirty && !force) return;
+  if(dirty && force && !confirm('この端末の未保存の変更を捨てて、最新を読み込みますか？')) return;
+  setSync('busy','⏳ 読み込み中');
+  try{
+    const {sha,data}=await fetchRemote();
+    remoteSha=sha;
+    if(data && data.schedule){ scheduleData=data.schedule; if(Array.isArray(data.wishlist)) wishlistData=data.wishlist; }
+    dirty=false; writeCache(); renderAll(); renderWishlist(); idleStatus();
+  }catch(e){
+    setSync('warn','⚠️ 読み込み失敗（オフライン表示中）');
+  }
+}
+
+function save(){ dirty=true; writeCache(); schedulePush(); }
+function schedulePush(){
+  if(!getToken()){ idleStatus(); return; }
+  setSync('busy','⏳ 保存待ち…');
+  clearTimeout(pushTimer); pushTimer=setTimeout(pushRemote, 1200);
+}
+async function pushRemote(){
+  if(pushing){ schedulePush(); return; }
+  if(!dirty || !getToken()){ idleStatus(); return; }
+  pushing=true; setSync('busy','⏳ 保存中…');
+  try{
+    let latest=null;
+    try{ latest=await fetchRemote(); }catch(e){}
+    if(latest && latest.sha && remoteSha && latest.sha!==remoteSha){
+      const overwrite=confirm('ほかの端末でしおりが更新されています。\n\nOK：この端末の内容で上書き\nキャンセル：最新の内容を読み込む（この端末の変更は消えます）');
+      if(!overwrite){
+        pushing=false; dirty=false;
+        if(latest.data && latest.data.schedule){ scheduleData=latest.data.schedule; if(Array.isArray(latest.data.wishlist)) wishlistData=latest.data.wishlist; }
+        remoteSha=latest.sha; writeCache(); renderAll(); renderWishlist(); idleStatus(); return;
+      }
+    }
+    const body={
+      message:'しおりを更新',
+      branch:GH_BRANCH,
+      content:b64EncodeUtf8(JSON.stringify({schedule:scheduleData, wishlist:wishlistData, updatedAt:new Date().toISOString()},null,1))
+    };
+    const sha=(latest && latest.sha) || remoteSha; if(sha) body.sha=sha;
+    const r=await fetch('https://api.github.com/repos/'+GH_REPO+'/contents/'+GH_FILE,{method:'PUT',headers:Object.assign({'Content-Type':'application/json'},ghHeaders()),body:JSON.stringify(body)});
+    if(r.status===401||r.status===403) throw new Error('auth');
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const j=await r.json(); remoteSha=j.content.sha; dirty=false; writeCache(); idleStatus();
+  }catch(e){
+    setSync('warn', e.message==='auth' ? '⚠️ トークンが無効です（タップ）' : '⚠️ 保存失敗・あとで再試行（タップ）');
+  }finally{ pushing=false; }
+}
+
+function openSyncModal(){
+  document.getElementById('sync-token').value='';
+  document.getElementById('sync-token').placeholder = getToken() ? '設定済み（変更する場合のみ入力）' : 'github_pat_…';
+  document.getElementById('sync-status-line').textContent=lastSyncMsg;
+  document.getElementById('modal-sync').classList.add('open');
+}
+function closeSyncModal(){ document.getElementById('modal-sync').classList.remove('open'); }
+async function saveToken(){
+  const v=document.getElementById('sync-token').value.trim();
+  if(v){ lsSet(TOKEN_KEY,v); }
+  refreshMode(); closeSyncModal();
+  if(dirty) pushRemote(); else reloadRemote(false);
+}
+function forgetToken(){
+  if(!confirm('この端末からトークンを削除しますか？（閲覧のみになります）')) return;
+  lsDel(TOKEN_KEY); refreshMode(); closeSyncModal(); idleStatus();
+}
+document.getElementById('modal-sync').addEventListener('click', e => { if(e.target===document.getElementById('modal-sync')) closeSyncModal(); });
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible' && !dirty && !document.querySelector('.modal-overlay.open')) reloadRemote(false); });
+setInterval(()=>{ if(document.visibilityState==='visible' && !dirty && !pushing && !document.querySelector('.modal-overlay.open')) reloadRemote(false); }, 120000);
+
+// =============================================
+// NOW DETECTION
+// =============================================
+const DAY_DATES = { day1:'2026-11-20', day2:'2026-11-21', day3:'2026-11-22' };
+
+function parseTime(timeStr, dateStr) {
+  if (!timeStr || !dateStr) return null;
+  const m = timeStr.match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  const [y,mo,d] = dateStr.split('-').map(Number);
+  return new Date(y, mo-1, d, parseInt(m[1]), parseInt(m[2]));
+}
+
+function getCurrentItem(day) {
+  const now = new Date();
+  const dateStr = DAY_DATES[day];
+  // その日（DAY_DATES の日付）以外は表示しない
+  const today = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+  if (dateStr !== today) return -1;
+  const items = scheduleData[day] || [];
+  const timed = items.map((it,i) => ({it, i, t: parseTime(it.time, dateStr)})).filter(x => x.t);
+  if (!timed.length) return -1;
+  // 開始時刻が現在以前のうち最も遅い予定をNOW（break しない）
+  let cur = -1;
+  for (let x of timed) {
+    if (x.t <= now) cur = x.i;
+  }
+  return cur;
+}
+
+function updateNowBanners() {
+  ['day1','day2','day3'].forEach(day => {
+    const el = document.getElementById('now-banner-' + day);
+    if (!el) return;
+    const nowIdx = getCurrentItem(day);
+    if (nowIdx < 0) { el.innerHTML = ''; return; }
+    const item = scheduleData[day][nowIdx];
+    const next = scheduleData[day][nowIdx + 1];
+    el.innerHTML = `
+      <div class="now-banner">
+        <div class="now-dot"></div>
+        <div style="flex:1;">
+          <div class="now-label">NOW — 現在の予定</div>
+          <div class="now-title">${esc(item.title)}</div>
+        </div>
+        ${next ? `<div class="now-next"><div style="font-size:9px;opacity:.7;margin-bottom:2px;">NEXT</div>${esc(next.title)}</div>` : ''}
+      </div>`;
+  });
+}
+
+// =============================================
+// RENDER
+// =============================================
+function renderAll(){ ['day1','day2','day3'].forEach(renderDay); }
+
+function renderDay(day) {
+  const tl = document.getElementById('timeline-' + day);
+  tl.innerHTML = '';
+  const items = scheduleData[day];
+  if (!items || !items.length) { tl.innerHTML = '<div class="empty-state">予定がありません</div>'; return; }
+  const nowIdx = getCurrentItem(day);
+  items.forEach((item, idx) => tl.appendChild(createItemEl(item, day, idx, idx === nowIdx)));
+  updateNowBanners();
+}
+
+function createItemEl(item, day, idx, isNow) {
+  const el = document.createElement('div');
+  let cls = 'tl-item';
+  if (isNow) cls += ' is-now';
+  if (item.highlight) cls += ' highlight';
+  if (item.type === 'transit') cls += ' type-transit';
+  el.className = cls;
+  el.dataset.id = item.id; el.dataset.day = day; el.dataset.idx = idx;
+  el.draggable = true;
+
+  // Big buttons based on type
+  let bigBtnsHtml = '';
+  if (item.type === 'transit' && item.guideKey) {
+    bigBtnsHtml = `
+      <button class="transit-guide-btn" onclick="openGuide('${item.guideKey}')">
+        🗺 乗換・道順ガイドを見る
+      </button>`;
+  } else if (item.type === 'spot' && item.guideKey) {
+    // スポット名からGoogleマップ検索URLを生成
+    const rawTitle = item.title.replace(/【[^】]*】/g,'').replace(/\|.*$/,'').replace(/[🧱🏙🚢🌿👜🥟🌅🍜🍣🏮🌃🏛🗺🚃]/gu,'').trim();
+    const spotName = item.mapQuery || rawTitle;
+    bigBtnsHtml = `
+      <div class="big-btns">
+        <button class="big-btn guide" onclick="openGuide('${item.guideKey}')">
+          <span class="big-btn-icon">📖</span>スポット詳細
+        </button>
+        <a class="big-btn map" href="https://maps.google.com/?q=${encodeURIComponent(spotName)}" target="_blank"><span class="big-btn-icon">📍</span>地図</a>
+        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/${encodeURIComponent(spotName)}" target="_blank"><span class="big-btn-icon">🗺</span>ルート</a>
+      </div>`;
+  } else if (item.type === 'hotel') {
+    const isNew = (item.links||[]).some(l => l.url && l.url.includes('newgrand')) || (item.title && item.title.includes('ニューグランド'));
+    const hotelQuery = isNew ? 'ホテルニューグランド横浜' : '東武ホテルレバント東京';
+    bigBtnsHtml = `
+      <div class="big-btns">
+        <a class="big-btn map" href="https://maps.google.com/?q=${encodeURIComponent(hotelQuery)}" target="_blank"><span class="big-btn-icon">📍</span>地図</a>
+        <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/${encodeURIComponent(hotelQuery)}" target="_blank"><span class="big-btn-icon">🗺</span>ルート</a>
+        <a class="big-btn hotel" href="${isNew ? 'https://www.hotel-newgrand.co.jp/' : 'https://www.tobuhotel.co.jp/levant/'}" target="_blank"><span class="big-btn-icon">🌐</span>公式</a>
+      </div>`;
+  } else if (item.type === 'transit') {
+    const yahooLinks = (item.links||[]).filter(l => l.label && l.label.includes('Yahoo'));
+    if (yahooLinks.length) {
+      const btns = yahooLinks.map(l => `<a class="big-btn transit" href="${l.url}" target="_blank"><span class="big-btn-icon">🚃</span>${l.label}</a>`).join('');
+      bigBtnsHtml = `<div class="big-btns">${btns}</div>`;
+    }
+  } else if (item.type === 'train') {
+    // 出発駅を判定（山形→東京 or 東京→山形）
+    const isTokyo = item.desc && item.desc.includes('山形行');
+    const transitUrl = isTokyo
+      ? 'https://transit.yahoo.co.jp/search/result?from=東京&to=山形&kind=1&ticket=ic&shin=1'
+      : 'https://transit.yahoo.co.jp/search/result?from=山形&to=東京&kind=1&ticket=ic&shin=1';
+    const ekiUrl = isTokyo
+      ? 'https://www.jreast.co.jp/estation/stations/1039.html'
+      : 'https://www.jreast.co.jp/estation/stations/1600.html';
+    bigBtnsHtml = `
+      <div class="big-btns">
+        <a class="big-btn transit" href="${transitUrl}" target="_blank"><span class="big-btn-icon">🚃</span>乗換案内</a>
+        <a class="big-btn map" href="${ekiUrl}" target="_blank"><span class="big-btn-icon">🚉</span>駅情報</a>
+      </div>`;
+  }
+
+  // Next dest
+  let nextHtml = '';
+  if (item.nextDest) {
+    nextHtml = `
+      <div class="next-dest">
+        <div class="next-dest-arrow">➡️</div>
+        <div class="next-dest-info">
+          <div class="next-dest-label">次の目的地</div>
+          <div class="next-dest-title">${esc(item.nextDest)}</div>
+        </div>
+      </div>`;
+  }
+
+  // Small links (exclude hotel/transit which use bigBtns; show for spot, normal, train, etc.)
+  const smallLinks = (item.links||[]).filter(() => item.type !== 'hotel' && item.type !== 'transit');
+  const linksHtml = smallLinks.map(l => `<a class="link-btn" href="${esc(l.url)}" target="_blank">${esc(l.label)}</a>`).join('');
+
+  el.innerHTML = `
+    <div class="now-badge">NOW</div>
+    <div class="tl-header">
+      <div class="tl-drag-handle" title="ドラッグで並び替え">⠿</div>
+      <div class="tl-header-main">
+        <div class="tl-top">
+          <div class="tl-time">${esc(item.time)}</div>
+          <div class="tl-title">${esc(item.title)}</div>
+        </div>
+      </div>
+      <div class="tl-actions">
+        <button class="tl-btn" onclick="editItem('${day}',${idx})">✏️</button>
+        <button class="tl-btn delete" onclick="deleteItem('${day}',${idx})">🗑</button>
+      </div>
+    </div>
+    <div class="tl-body">
+      ${item.desc ? `<div class="tl-desc">${esc(item.desc).replace(/\n/g,'<br>')}</div>` : ''}
+      ${bigBtnsHtml}
+      ${nextHtml}
+      ${linksHtml ? `<div class="tl-links">${linksHtml}</div>` : ''}
+    </div>`;
+
+  el.addEventListener('dragstart', onDragStart);
+  el.addEventListener('dragover', onDragOver);
+  el.addEventListener('dragleave', onDragLeave);
+  el.addEventListener('drop', onDrop);
+  el.addEventListener('dragend', onDragEnd);
+  addTouchDrag(el);
+  return el;
+}
+
+// =============================================
+// DRAG & DROP
+// =============================================
+let dragSrcDay = null, dragSrcIdx = null;
+function onDragStart(e){ dragSrcDay=this.dataset.day; dragSrcIdx=parseInt(this.dataset.idx); this.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; }
+function onDragOver(e){ e.preventDefault(); this.classList.add('drag-over'); }
+function onDragLeave(){ this.classList.remove('drag-over'); }
+function onDrop(e){
+  e.preventDefault(); this.classList.remove('drag-over');
+  const td=this.dataset.day, ti=parseInt(this.dataset.idx);
+  if(dragSrcDay===td && dragSrcIdx!==ti){
+    const arr=scheduleData[dragSrcDay];
+    const [m]=arr.splice(dragSrcIdx,1); arr.splice(ti,0,m);
+    save(); renderDay(dragSrcDay);
+  }
+}
+function onDragEnd(){ this.classList.remove('dragging'); }
+
+function addTouchDrag(el){
+  let sy=0,si=0,day='';
+  const h=el.querySelector('.tl-drag-handle');
+  h.addEventListener('touchstart',e=>{sy=e.touches[0].clientY;si=parseInt(el.dataset.idx);day=el.dataset.day;el.classList.add('dragging');},{passive:true});
+  h.addEventListener('touchmove',e=>{e.preventDefault();el.style.transform=`translateY(${e.touches[0].clientY-sy}px)`;el.style.zIndex=10;},{passive:false});
+  h.addEventListener('touchend',e=>{
+    el.classList.remove('dragging');el.style.transform='';el.style.zIndex='';
+    const ey=e.changedTouches[0].clientY;
+    const its=document.querySelectorAll(`#timeline-${day} .tl-item`);
+    let ti=si;
+    its.forEach((it,i)=>{const r=it.getBoundingClientRect();if(ey>r.top&&ey<r.bottom)ti=i;});
+    if(ti!==si){const arr=scheduleData[day];const[m]=arr.splice(si,1);arr.splice(ti,0,m);save();renderDay(day);}
+  });
+}
+
+// =============================================
+// GUIDE MODAL
+// =============================================
+function openGuide(key){
+  const g = GUIDES[key];
+  if(!g) return;
+  document.getElementById('guide-modal-title').textContent = g.title;
+  document.getElementById('guide-modal-body').innerHTML = g.content;
+  document.getElementById('modal-guide').classList.add('open');
+}
+function closeGuideModal(){ document.getElementById('modal-guide').classList.remove('open'); }
+document.getElementById('modal-guide').addEventListener('click', e => { if(e.target===document.getElementById('modal-guide')) closeGuideModal(); });
+
+// =============================================
+// ADD / EDIT MODAL — リンク複数対応
+// =============================================
+let currentModalDay=null, editingIdx=null;
+
+function renderLinkList(links){
+  const list = document.getElementById('link-list');
+  list.innerHTML = '';
+  (links||[]).forEach((lk, i) => {
+    const row = document.createElement('div');
+    row.className = 'link-row';
+    row.innerHTML = `
+      <input class="form-input" placeholder="リンク名" value="${esc(lk.label)}" data-li="${i}" data-field="label">
+      <input class="form-input" placeholder="https://..." value="${esc(lk.url)}" data-li="${i}" data-field="url" style="flex:2;">
+      <button class="link-row-del" onclick="removeLinkRow(${i})" title="削除">✕</button>`;
+    list.appendChild(row);
+  });
+}
+
+function addLinkRow(){
+  const rows = document.querySelectorAll('#link-list .link-row');
+  const newIdx = rows.length;
+  const row = document.createElement('div');
+  row.className = 'link-row';
+  row.innerHTML = `
+    <input class="form-input" placeholder="リンク名" data-li="${newIdx}" data-field="label">
+    <input class="form-input" placeholder="https://..." data-li="${newIdx}" data-field="url" style="flex:2;">
+    <button class="link-row-del" onclick="removeLinkRow(${newIdx})" title="削除">✕</button>`;
+  document.getElementById('link-list').appendChild(row);
+}
+
+function removeLinkRow(i){
+  const rows = [...document.querySelectorAll('#link-list .link-row')];
+  if(rows[i]) rows[i].remove();
+  // re-index data-li
+  document.querySelectorAll('#link-list .link-row').forEach((r,idx)=>{
+    r.querySelectorAll('[data-li]').forEach(el => el.dataset.li = idx);
+    r.querySelector('.link-row-del').setAttribute('onclick',`removeLinkRow(${idx})`);
+  });
+}
+
+function collectLinks(){
+  const links = [];
+  document.querySelectorAll('#link-list .link-row').forEach(row => {
+    const label = row.querySelector('[data-field="label"]').value.trim();
+    const url   = row.querySelector('[data-field="url"]').value.trim();
+    if(url) links.push({ label: label||'リンク', url });
+  });
+  return links;
+}
+
+function openAddModal(day){
+  currentModalDay=day; editingIdx=null;
+  document.getElementById('modal-add-title').textContent='予定を追加';
+  document.getElementById('input-time').value='';
+  document.getElementById('input-title').value='';
+  document.getElementById('input-desc').value='';
+  renderLinkList([]);
+  document.getElementById('btn-save').textContent='追加する';
+  document.getElementById('modal-add').classList.add('open');
+}
+function closeAddModal(){ document.getElementById('modal-add').classList.remove('open'); editingIdx=null; }
+
+function saveItem(){
+  const time  = document.getElementById('input-time').value.trim();
+  const title = document.getElementById('input-title').value.trim();
+  const desc  = document.getElementById('input-desc').value.trim();
+  if(!title){alert('タイトルを入力してください');return;}
+  const links = collectLinks();
+  if(editingIdx!==null){
+    scheduleData[currentModalDay][editingIdx]={...scheduleData[currentModalDay][editingIdx],time,title,desc,links};
+  } else {
+    scheduleData[currentModalDay].push({id:'item-'+Date.now(),time,title,desc,links,type:'normal'});
+  }
+  save(); renderDay(currentModalDay); closeAddModal();
+}
+
+function editItem(day,idx){
+  const item=scheduleData[day][idx];
+  currentModalDay=day; editingIdx=idx;
+  document.getElementById('modal-add-title').textContent='予定を編集';
+  document.getElementById('input-time').value=item.time||'';
+  document.getElementById('input-title').value=item.title||'';
+  document.getElementById('input-desc').value=item.desc||'';
+  renderLinkList(item.links||[]);
+  document.getElementById('btn-save').textContent='保存する';
+  document.getElementById('modal-add').classList.add('open');
+}
+
+function deleteItem(day,idx){
+  if(!confirm('この予定を削除しますか？'))return;
+  scheduleData[day].splice(idx,1); save(); renderDay(day);
+}
+document.getElementById('modal-add').addEventListener('click',e=>{if(e.target===document.getElementById('modal-add'))closeAddModal();});
+
+// =============================================
+// TOKYO STATION SUB-NAV
+// =============================================
+function toggleTsCard(card) {
+  card.classList.toggle('open');
+  const toggle = card.querySelector('.ts-route-card-toggle');
+  if(toggle) toggle.textContent = card.classList.contains('open') ? '▲ 閉じる' : '▼ 詳しく見る';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.ts-sub-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = btn.dataset.tspanel;
+      document.querySelectorAll('.ts-sub-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.ts-sub-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById(panel);
+      if(target) target.classList.add('active');
+    });
+  });
+});
+
+// =============================================
+// TABS
+// =============================================
+function switchTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===id));
+  document.querySelectorAll('.day-panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+id));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.nav===id));
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+
+// =============================================
+// WISHLIST
+// =============================================
+let wishlistData = (cached && Array.isArray(cached.wishlist)) ? cached.wishlist : [];
+let wlEditingIdx = null;
+
+function saveWishlist(){ save(); }
+
+function renderWishlist(){
+  const el = document.getElementById('wishlist-container');
+  if(!el) return;
+  if(!wishlistData.length){
+    el.innerHTML = '<div class="wishlist-empty">まだ追加されていません<br>＋ 追加ボタンから登録しよう</div>';
+    return;
+  }
+  el.innerHTML = '';
+  wishlistData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'wishlist-item' + (item.visited ? ' visited' : '');
+    div.innerHTML = `
+      <div class="wishlist-check" onclick="toggleWishlistVisited(${idx})">${item.visited ? '✓' : ''}</div>
+      <div class="wishlist-body">
+        <div class="wishlist-name">${item.name}</div>
+        <div class="wishlist-meta">${[item.area, item.price].filter(Boolean).join(' ／ ')}</div>
+        ${item.memo ? `<div style="font-size:11px;color:#666;line-height:1.6;margin-bottom:4px;">${item.memo}</div>` : ''}
+        <div class="wishlist-actions">
+          ${item.url ? `<a class="gourmet-shop-btn" href="${item.url}" target="_blank">📍 地図</a>` : ''}
+          <button class="gourmet-shop-btn" onclick="editWishlistItem(${idx})" style="cursor:pointer;background:none;">✏️ 編集</button>
+          <button class="wishlist-del" onclick="deleteWishlistItem(${idx})">🗑</button>
+        </div>
+      </div>`;
+    el.appendChild(div);
+  });
+}
+
+function openWishlistModal(){
+  wlEditingIdx = null;
+  document.getElementById('wishlist-modal-title').textContent = '食べたいお店を追加';
+  ['wl-name','wl-area','wl-price','wl-memo','wl-url'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('wl-save-btn').textContent = '追加する';
+  document.getElementById('modal-wishlist').classList.add('open');
+}
+function closeWishlistModal(){ document.getElementById('modal-wishlist').classList.remove('open'); wlEditingIdx = null; }
+
+function saveWishlistItem(){
+  const name = document.getElementById('wl-name').value.trim();
+  if(!name){ alert('お店の名前を入力してください'); return; }
+  const item = {
+    name,
+    area:  document.getElementById('wl-area').value.trim(),
+    price: document.getElementById('wl-price').value.trim(),
+    memo:  document.getElementById('wl-memo').value.trim(),
+    url:   document.getElementById('wl-url').value.trim(),
+    visited: false,
+  };
+  if(wlEditingIdx !== null){
+    item.visited = wishlistData[wlEditingIdx].visited;
+    wishlistData[wlEditingIdx] = item;
+  } else {
+    wishlistData.push(item);
+  }
+  saveWishlist(); renderWishlist(); closeWishlistModal();
+}
+
+function editWishlistItem(idx){
+  const item = wishlistData[idx];
+  wlEditingIdx = idx;
+  document.getElementById('wishlist-modal-title').textContent = 'お店を編集';
+  document.getElementById('wl-name').value  = item.name  || '';
+  document.getElementById('wl-area').value  = item.area  || '';
+  document.getElementById('wl-price').value = item.price || '';
+  document.getElementById('wl-memo').value  = item.memo  || '';
+  document.getElementById('wl-url').value   = item.url   || '';
+  document.getElementById('wl-save-btn').textContent = '保存する';
+  document.getElementById('modal-wishlist').classList.add('open');
+}
+
+function deleteWishlistItem(idx){
+  if(!confirm('このお店を削除しますか？')) return;
+  wishlistData.splice(idx, 1); saveWishlist(); renderWishlist();
+}
+
+function toggleWishlistVisited(idx){
+  wishlistData[idx].visited = !wishlistData[idx].visited;
+  saveWishlist(); renderWishlist();
+}
+
+document.getElementById('modal-wishlist').addEventListener('click', e => {
+  if(e.target === document.getElementById('modal-wishlist')) closeWishlistModal();
+});
+
+// =============================================
+// INIT
+// =============================================
+renderAll();
+renderWishlist();
+refreshMode();
+if(dirty && getToken()) pushRemote(); else reloadRemote(false);
+// Update now-badge every minute
+setInterval(()=>{
+  const isDragging = document.querySelector('.tl-item.dragging');
+  const isModalOpen = document.querySelector('.modal-overlay.open');
+  if(isDragging || isModalOpen) return;
+  ['day1','day2','day3'].forEach(renderDay);
+}, 60000);
+</script>
+</body>
+</html>
+　

@@ -1,0 +1,358 @@
+{
+ "schedule": {
+  "day1": [
+   {
+    "id": "d1-0",
+    "time": "8:00頃",
+    "title": "自宅出発 🏠",
+    "desc": "駅まで約1時間を見て出発",
+    "type": "normal",
+    "links": []
+   },
+   {
+    "id": "d1-1",
+    "time": "9:00",
+    "title": "山形駅出発 🚄",
+    "desc": "🚄 山形新幹線 つばさ132号 東京行\n🕘 9:00発 → 11:48着（168分）\n📍 山形駅 → 東京駅\n🪑 12号車 4番D席",
+    "type": "train",
+    "links": []
+   },
+   {
+    "id": "d1-2",
+    "time": "11:48",
+    "title": "東京駅到着 → 横浜へ乗り換え",
+    "desc": "JR東海道線で横浜へ約25〜28分\n\n🚉 東京駅（JR東海道線 7〜10番線）乗車\n　↓ JR東海道線（横浜方面）約25〜28分\n🔁 横浜駅 下車",
+    "type": "transit",
+    "guideKey": "transit-tokyo-yokohama",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E6%9D%B1%E4%BA%AC&to=%E6%A8%AA%E6%B5%9C"
+     }
+    ]
+   },
+   {
+    "id": "d1-3",
+    "time": "12:20頃",
+    "title": "横浜駅 → ホテルへ 🚃",
+    "desc": "みなとみらい線に乗り換えてホテルへ荷物を預けに\n💡 チェックインは14:00〜のため、まず荷物を預けて観光へ\n\n🚉 横浜駅（みなとみらい線）乗車\n　↓ みなとみらい線（元町・中華街方面）約5分\n🏨 元町・中華街駅 下車 → 1番出口からホテルへ徒歩1分",
+    "type": "transit",
+    "guideKey": "transit-yokohama-hotel",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E6%A8%AA%E6%B5%9C&to=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97"
+     }
+    ]
+   },
+   {
+    "id": "d1-4",
+    "time": "13:00",
+    "title": "ランチ｜王府井レストラン 🍚",
+    "desc": "横浜中華街の老舗レストラン。本格中華をゆっくり楽しむ\n到着後は無理せずゆっくりランチ。新幹線の疲れを癒しながら",
+    "type": "spot",
+    "guideKey": "spot-chinatown",
+    "nextDest": "ホテルニューグランド（徒歩約5分）",
+    "mapQuery": "王府井 横浜中華街",
+    "links": [
+     {
+      "label": "王府井 地図",
+      "url": "https://maps.google.com/?q=王府井+横浜中華街"
+     }
+    ]
+   },
+   {
+    "id": "d1-5",
+    "time": "14:00",
+    "title": "ホテルニューグランド チェックイン 🏨",
+    "desc": "チェックイン：14:00〜 ／ チェックアウト：〜11:00\n部屋に荷物を置いてひと休み",
+    "type": "hotel",
+    "highlight": true,
+    "links": [
+     {
+      "label": "公式",
+      "url": "https://www.hotel-newgrand.co.jp/"
+     },
+     {
+      "label": "地図",
+      "url": "https://maps.google.com/?cid=16412194114761053098"
+     }
+    ]
+   },
+   {
+    "id": "d1-6",
+    "time": "15:30",
+    "title": "横浜大世界 🏯",
+    "desc": "ホテルから徒歩約5分。中華街最大級のエンタメ施設\nお土産・雑貨・グルメがまとまっていて雨でも楽しめる",
+    "type": "spot",
+    "links": [
+     {
+      "label": "横浜大世界 公式",
+      "url": "https://www.daska.jp/"
+     },
+     {
+      "label": "地図",
+      "url": "https://maps.google.com/?q=横浜大世界"
+     }
+    ]
+   },
+   {
+    "id": "d1-7",
+    "time": "16:30頃",
+    "title": "橫濱媽祖廟 🏮",
+    "desc": "横浜大世界のすぐそば。中華街のシンボル的なお廟\n朱色の廟が美しく、参拝もできる。写真スポットとしても人気",
+    "type": "spot",
+    "nextDest": "夕食｜萬珍樓（中華街内）",
+    "links": [
+     {
+      "label": "媽祖廟 公式",
+      "url": "https://www.yokohama-masobyo.jp/"
+     },
+     {
+      "label": "地図",
+      "url": "https://maps.google.com/?q=横浜媽祖廟"
+     }
+    ]
+   },
+   {
+    "id": "d1-8",
+    "time": "18:00",
+    "title": "夕食｜萬珍樓 🏮",
+    "desc": "ホテルから徒歩約5分。予約済み 18:00〜\n中華街を代表する老舗広東料理店",
+    "type": "spot",
+    "highlight": true,
+    "links": [
+     {
+      "label": "萬珍樓 公式",
+      "url": "https://www.manchinro.com/honten/"
+     },
+     {
+      "label": "地図",
+      "url": "https://maps.google.com/?q=萬珍樓本店+横浜中華街"
+     }
+    ]
+   },
+   {
+    "id": "d1-9",
+    "time": "20:30頃",
+    "title": "山下公園 夜景散歩 🌃",
+    "desc": "ホテルすぐ横。夜の港をのんびり散歩\n氷川丸・ベイブリッジのライトアップを眺めながら",
+    "type": "spot",
+    "guideKey": "spot-yamashita",
+    "mapQuery": "山下公園 横浜",
+    "links": []
+   }
+  ],
+  "day2": [
+   {
+    "id": "d2-1",
+    "time": "〜11:00",
+    "title": "ホテルニューグランド チェックアウト 🏨",
+    "desc": "朝食・部屋でゆっくり → チェックアウト（〜11:00）\nチェックアウト後は荷物を預けてホテル探索へ",
+    "type": "hotel",
+    "links": [
+     {
+      "label": "ホテル公式",
+      "url": "https://www.hotel-newgrand.co.jp/"
+     }
+    ]
+   },
+   {
+    "id": "d2-2",
+    "time": "11:00〜12:00",
+    "title": "ホテル本館を見て回る 🏛",
+    "desc": "ロビーや階段など、クラシックな雰囲気を楽しむ\nホテル内の写真を撮る",
+    "type": "spot",
+    "links": []
+   },
+   {
+    "id": "d2-3",
+    "time": "12:00〜13:30",
+    "title": "昼食 🍽",
+    "desc": "",
+    "type": "spot",
+    "nextDest": "ホテルニューグランド（荷物受け取り）",
+    "links": []
+   },
+   {
+    "id": "d2-4",
+    "time": "13:30〜14:00",
+    "title": "荷物を受け取る 🏨",
+    "desc": "ホテルへ戻って預けた荷物を受け取る",
+    "type": "normal",
+    "links": []
+   },
+   {
+    "id": "d2-5a",
+    "time": "14:00頃",
+    "title": "【A案】横浜 → 錦糸町 🚃",
+    "desc": "先に錦糸町のホテルへ荷物を預けてから東京駅へ向かう場合\n元町・中華街駅から錦糸町まで約55分\n\n🚉 元町・中華街（みなとみらい線）乗車\n　↓ 横浜 乗り換え（JR横須賀線・総武快速線 直通 千葉方面）\n　※東京止まりなら東京駅地下ホームで総武快速線に乗り換え\n🏨 錦糸町 下車（北口）→ ホテルへ荷物を預ける",
+    "type": "transit",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97&to=%E9%8C%A6%E7%B3%B8%E7%94%BA"
+     }
+    ]
+   },
+   {
+    "id": "d2-5b",
+    "time": "14:00頃",
+    "title": "【B案】横浜 → 東京駅 🚃",
+    "desc": "東京駅に直接向かう場合（荷物はコインロッカーへ）\n元町・中華街駅から東京駅まで約50分\n\n🚉 元町・中華街（みなとみらい線）乗車\n　↓ 横浜 乗り換え（JR東海道線）\n🏛 東京駅 下車 → 丸の内口へ\n※荷物：東京駅構内のコインロッカーを利用",
+    "type": "transit",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97&to=%E6%9D%B1%E4%BA%AC"
+     }
+    ]
+   },
+   {
+    "id": "d2-5c",
+    "time": "14:00頃",
+    "title": "【C案】山下公園 → 横浜駅（シーバス） ⛴",
+    "desc": "荷物を受け取ったら山下公園からシーバス（観光船）で横浜駅東口へ\n海から横浜の景色を楽しみながら移動できる観光ルート\n\n⛴ 山下公園さん橋 乗船\n　↓ シーバス 約20分〜（寄港する便は長め。料金・所要は公式で要確認）\n🚉 横浜駅東口 下船 → JRで錦糸町（A案）または東京駅（B案）へ\n\n※要事前に時刻確認（運行本数が少ない場合あり）",
+    "type": "transit",
+    "links": [
+     {
+      "label": "シーバス公式",
+      "url": "https://www.welcome.city.yokohama.jp/topics/tp_detail.php?tpid=T03915"
+     },
+     {
+      "label": "Yahoo乗り換え（横浜→錦糸町）",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E6%A8%AA%E6%B5%9C&to=%E9%8C%A6%E7%B3%B8%E7%94%BA"
+     }
+    ]
+   },
+   {
+    "id": "d2-6a",
+    "time": "15:15頃",
+    "title": "【A案】錦糸町 → 東京駅へ 🚃",
+    "desc": "ホテルに荷物を預けたらすぐ東京駅へ（錦糸町着は15:00前後の見込み）\n\n🚉 錦糸町駅（JR総武快速線）乗車\n　↓ JR総武快速線（東京方面）約8分\n🏛 東京駅 下車 → 丸の内口へ",
+    "type": "transit",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E9%8C%A6%E7%B3%B8%E7%94%BA&to=%E6%9D%B1%E4%BA%AC"
+     }
+    ]
+   },
+   {
+    "id": "d2-6",
+    "time": "15:30〜18:00",
+    "title": "東京駅・丸の内を楽しむ 🏛",
+    "desc": "📍 丸の内駅舎を外から眺める（赤レンガ・重要文化財）\n🌿 KITTEガーデン屋上（無料・駅舎を一望できる絶景スポット）\n🌿 丸の内エリアをぶらぶら",
+    "type": "spot",
+    "links": [
+     {
+      "label": "KITTE地図",
+      "url": "https://www.google.com/maps/search/KITTE+東京"
+     }
+    ]
+   },
+   {
+    "id": "d2-6b",
+    "time": "18:00頃",
+    "title": "東京駅 → 錦糸町 移動 🚃",
+    "desc": "【A案・B案 共通】ホテルへ戻る\n💼 B案の場合：先に東京駅のコインロッカーから荷物を取り出す\n\n🚉 東京駅（JR総武快速線）乗車\n　↓ JR総武快速線（千葉方面）約8分\n🏨 錦糸町駅 下車 → ホテルへ",
+    "type": "transit",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E6%9D%B1%E4%BA%AC&to=%E9%8C%A6%E7%B3%B8%E7%94%BA"
+     }
+    ]
+   },
+   {
+    "id": "d2-7",
+    "time": "18:30頃",
+    "title": "東武ホテルレバント東京 チェックイン 🏨",
+    "desc": "東武ホテルレバント東京にチェックイン\nチェックイン：15:00〜 ／ チェックアウト：〜11:00",
+    "type": "hotel",
+    "highlight": true,
+    "links": [
+     {
+      "label": "ホテル公式",
+      "url": "https://www.tobuhotel.co.jp/levant/"
+     },
+     {
+      "label": "地図",
+      "url": "https://maps.google.com/maps?q=東武ホテルレバント東京"
+     }
+    ]
+   }
+  ],
+  "day3": [
+   {
+    "id": "d3-1",
+    "time": "朝食",
+    "title": "朝食｜東武ホテルレバント 🍳",
+    "desc": "手配済み。ゆっくり食べてチェックアウトへ",
+    "type": "normal",
+    "links": []
+   },
+   {
+    "id": "d3-2",
+    "time": "〜11:00",
+    "title": "チェックアウト 🏨",
+    "desc": "チェックアウト：〜11:00\n※疲れていればレイトチェックアウト（有料）も相談可",
+    "type": "normal",
+    "links": [
+     {
+      "label": "ホテルTEL",
+      "url": "tel:0356115511"
+     }
+    ]
+   },
+   {
+    "id": "d3-3",
+    "time": "11:00〜",
+    "title": "錦糸町 → 東京駅へ 🚃",
+    "desc": "錦糸町駅（JR総武快速線）→ 東京駅（約8分）\n🚉 錦糸町駅（JR総武快速ホーム）から乗車\n　↓ JR総武快速線（千葉→東京方面）\n　↓ 約8分\n🏛 東京駅 着（丸の内口へ）",
+    "type": "transit",
+    "links": [
+     {
+      "label": "Yahoo乗り換え",
+      "url": "https://transit.yahoo.co.jp/search/result?from=%E9%8C%A6%E7%B3%B8%E7%94%BA&to=%E6%9D%B1%E4%BA%AC"
+     }
+    ]
+   },
+   {
+    "id": "d3-4",
+    "time": "11:30〜",
+    "title": "東京駅周辺で過ごす 🏛",
+    "desc": "⏰ 12:30頃には新幹線改札へ向かう",
+    "type": "normal",
+    "links": []
+   },
+   {
+    "id": "d3-6",
+    "time": "13:00",
+    "title": "東京駅出発 🚄",
+    "desc": "🚄 山形新幹線 つばさ139号 山形行\n🕐 13:00発 → 15:50着\n📍 東京駅 → 山形駅\n🪑 16号車 3番D席",
+    "type": "train",
+    "highlight": true,
+    "links": []
+   },
+   {
+    "id": "d3-7",
+    "time": "15:50",
+    "title": "山形駅到着",
+    "desc": "お疲れさまでした！",
+    "type": "normal",
+    "links": []
+   },
+   {
+    "id": "d3-8",
+    "time": "16:50頃",
+    "title": "自宅到着 🏠",
+    "desc": "駅から約1時間",
+    "type": "normal",
+    "links": []
+   }
+  ]
+ },
+ "wishlist": [],
+ "updatedAt": "2026-11-18T05:24:27.780Z"
+}

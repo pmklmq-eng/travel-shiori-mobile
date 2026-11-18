@@ -717,8 +717,8 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
       <div class="gourmet-area-header">
         <div class="gourmet-area-icon">☕</div>
         <div class="gourmet-area-info">
-          <div class="gourmet-area-label">DAY 2 — 元町・山手エリア</div>
-          <div class="gourmet-area-name">元町・山手</div>
+          <div class="gourmet-area-label">DAY 2 — ホテルニューグランド</div>
+          <div class="gourmet-area-name">ホテル内（山下公園前）</div>
         </div>
       </div>
       <div class="gourmet-shop premium">
@@ -1044,7 +1044,7 @@ const GUIDES = {
     content: `
       <div class="guide-section">
         <div class="guide-section-title">電車利用（おすすめ）</div>
-        <div class="guide-row"><div class="guide-row-icon">🚇</div><div class="guide-row-text"><strong>みなとみらい線</strong><br>横浜駅 → 元町・中華街駅｜約8分｜5駅目（終点）<br>料金：Yahoo!乗換案内で確認｜駅からホテルまで徒歩約1分</div></div>
+        <div class="guide-row"><div class="guide-row-icon">🚇</div><div class="guide-row-text"><strong>みなとみらい線</strong><br>横浜駅 → 元町・中華街駅｜約8〜10分｜5駅目（終点）<br>料金：Yahoo!乗換案内で確認｜駅からホテルまで徒歩約1分</div></div>
         <div class="guide-row"><div class="guide-row-icon">🚪</div><div class="guide-row-text"><strong>1番出口（山下公園口）</strong>を出て目の前がホテル（徒歩約1分）</div></div>
       </div>
       <div class="guide-section">
@@ -1130,7 +1130,7 @@ const defaultData = {
     { id:'d1-0', time:'8:00頃', title:'自宅出発 🏠', desc:'駅まで約1時間を見て出発', type:'normal', links:[] },
     { id:'d1-1', time:'9:00', title:'山形駅出発 🚄', desc:'🚄 山形新幹線 つばさ132号 東京行\n🕘 9:00発 → 11:48着（168分）\n📍 山形駅 → 東京駅\n🪑 12号車 4番D席', type:'train', links:[] },
     { id:'d1-2', time:'11:48', title:'東京駅到着 → 横浜へ乗り換え', desc:'JR東海道線で横浜へ約25〜28分\n\n🚉 東京駅（JR東海道線 7〜10番線）乗車\n　↓ JR東海道線（横浜方面）約25〜28分\n🔁 横浜駅 下車', type:'transit', guideKey:'transit-tokyo-yokohama', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E6%9D%B1%E4%BA%AC&to=%E6%A8%AA%E6%B5%9C'}] },
-    { id:'d1-3', time:'12:20頃', title:'横浜駅 → ホテルへ 🚃', desc:'みなとみらい線に乗り換えてホテルへ荷物を預けに\n💡 チェックインは14:00〜のため、まず荷物を預けて観光へ\n\n🚉 横浜駅（みなとみらい線）乗車\n　↓ みなとみらい線（元町・中華街方面）約5分\n🏨 元町・中華街駅 下車 → 1番出口からホテルへ徒歩1分', type:'transit', guideKey:'transit-yokohama-hotel', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E6%A8%AA%E6%B5%9C&to=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97'}] },
+    { id:'d1-3', time:'12:20頃', title:'横浜駅 → ホテルへ 🚃', desc:'みなとみらい線に乗り換えてホテルへ荷物を預けに\n💡 チェックインは14:00〜のため、まず荷物を預けて観光へ\n\n🚉 横浜駅（みなとみらい線）乗車\n　↓ みなとみらい線（元町・中華街方面）約8〜10分\n🏨 元町・中華街駅 下車 → 1番出口からホテルへ徒歩1分', type:'transit', guideKey:'transit-yokohama-hotel', links:[{label:'Yahoo乗り換え',url:'https://transit.yahoo.co.jp/search/result?from=%E6%A8%AA%E6%B5%9C&to=%E5%85%83%E7%94%BA%E3%83%BB%E4%B8%AD%E8%8F%AF%E8%A1%97'}] },
     { id:'d1-4', time:'13:00', title:'ランチ｜王府井レストラン 🍚', desc:'横浜中華街の老舗レストラン。本格中華をゆっくり楽しむ\n到着後は無理せずゆっくりランチ。新幹線の疲れを癒しながら', type:'spot', guideKey:'spot-chinatown', nextDest:'ホテルニューグランド（徒歩約5分）', mapQuery:'王府井 横浜中華街', links:[{label:'王府井 地図',url:'https://maps.google.com/?q=王府井+横浜中華街'}] },
     { id:'d1-5', time:'14:00', title:'ホテルニューグランド チェックイン 🏨', desc:'チェックイン：14:00〜 ／ チェックアウト：〜11:00\n部屋に荷物を置いてひと休み', type:'hotel', highlight:true, links:[{label:'公式',url:'https://www.hotel-newgrand.co.jp/'},{label:'地図',url:'https://maps.google.com/?cid=16412194114761053098'}] },
     { id:'d1-6', time:'15:30', title:'横浜大世界 🏯', desc:'ホテルから徒歩約5分。中華街最大級のエンタメ施設\nお土産・雑貨・グルメがまとまっていて雨でも楽しめる', type:'spot', links:[{label:'横浜大世界 公式',url:'https://www.daska.jp/'},{label:'地図',url:'https://maps.google.com/?q=横浜大世界'}] },

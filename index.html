@@ -7,14 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #5a2a1c; --deep: #3a1a10; --gold: #d9a441; --gold-light: #f0d9a0;
-  --cream: #faf4ea; --mist: #f1e6d8; --accent: #c8703a; --red: #b23a2a;
-  --green: #6b7d3a; --white: #fff; --gray: #888;
-  --border:#eadfce; --bg2:#f5ece0; --card:#fff; --shadow:rgba(90,42,28,.08);
-  --fg:#4a2418; --fg2:#5c4a40; --fg3:#9a8a80; --accent-light:#f6e5d3;
+  --navy: #b3361c; --deep: #9c2c15; --gold: #ffe08a; --gold-light: #fff1c4;
+  --cream: #fff8ee; --mist: #fde8d6; --accent: #a63f14; --red: #c0291b;
+  --green: #4f7a2a; --white: #fff; --gray: #6b5a50;
+  --border:#f3dcc8; --bg2:#fdeee0; --card:#fff; --shadow:rgba(184,55,31,.10);
+  --fg:#3a2016; --fg2:#5a4236; --fg3:#7d6658; --accent-light:#fde3cf;
+  --ink:#3a2016; --gold-ink:#a8520c;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--navy);font-weight:300;min-height:100vh;padding-bottom:80px;}
+body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--ink);font-weight:300;min-height:100vh;padding-bottom:80px;}
 
 /* HEADER */
 .app-header{background:var(--deep);padding:20px 20px 16px;text-align:center;}
@@ -51,7 +52,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .quick-bar{background:var(--white);border-left:3px solid var(--accent);border-radius:2px;padding:10px 12px;margin-bottom:10px;}
 .quick-bar-label{font-size:9px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;}
 .quick-bar-btns{display:flex;flex-wrap:wrap;gap:6px;}
-.qt-btn{display:inline-block;font-size:11px;background:var(--mist);color:var(--navy);border:none;padding:7px 12px;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
+.qt-btn{display:inline-block;font-size:11px;background:var(--mist);color:var(--ink);border:none;padding:7px 12px;border-radius:20px;text-decoration:none;white-space:nowrap;transition:all .2s;}
 .qt-btn:active{background:var(--navy);color:var(--gold);}
 
 /* TIMELINE */
@@ -78,7 +79,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .tl-top{display:flex;align-items:baseline;gap:8px;margin-bottom:3px;}
 .tl-time{font-size:11px;letter-spacing:1px;color:var(--gold);font-weight:500;flex-shrink:0;min-width:40px;}
 .tl-item.type-transit .tl-time{color:var(--accent);}
-.tl-title{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--navy);flex:1;padding-right:50px;}
+.tl-title{font-family:'Shippori Mincho',serif;font-size:14px;font-weight:600;color:var(--ink);flex:1;padding-right:50px;}
 .tl-actions{position:absolute;top:8px;right:8px;display:flex;gap:2px;}
 .tl-btn{background:none;border:none;cursor:pointer;font-size:14px;opacity:.3;transition:opacity .2s;padding:4px;line-height:1;}
 .tl-btn:hover{opacity:.9;}
@@ -96,7 +97,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .next-dest-arrow{font-size:16px;color:var(--accent);}
 .next-dest-info{flex:1;}
 .next-dest-label{font-size:9px;letter-spacing:2px;color:var(--accent);margin-bottom:2px;}
-.next-dest-title{font-size:12px;font-weight:500;color:var(--navy);}
+.next-dest-title{font-size:12px;font-weight:500;color:var(--ink);}
 
 /* BIG BUTTONS */
 .big-btns{display:flex;gap:6px;margin-bottom:6px;}
@@ -113,7 +114,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 
 /* SMALL LINKS */
 .tl-links{display:flex;flex-wrap:wrap;gap:5px;}
-.link-btn{display:inline-block;font-size:10px;color:var(--navy);border:1px solid #ddd;padding:3px 10px;border-radius:2px;text-decoration:none;transition:all .2s;}
+.link-btn{display:inline-block;font-size:10px;color:var(--ink);border:1px solid #ddd;padding:3px 10px;border-radius:2px;text-decoration:none;transition:all .2s;}
 .link-btn:active{background:var(--navy);color:var(--gold);}
 
 /* TRANSIT GUIDE BUTTON */
@@ -136,12 +137,12 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .form-row{display:flex;gap:12px;}
 .form-group{flex:1;display:flex;flex-direction:column;gap:6px;}
 .form-label{font-size:10px;letter-spacing:3px;color:var(--gold);}
-.form-input,.form-textarea{background:white;border:1px solid var(--mist);border-radius:4px;padding:11px 12px;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--navy);outline:none;}
+.form-input,.form-textarea{background:white;border:1px solid var(--mist);border-radius:4px;padding:11px 12px;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--ink);outline:none;}
 .form-input:focus,.form-textarea:focus{border-color:var(--gold);}
 .form-textarea{resize:vertical;min-height:64px;}
 .modal-footer{padding:0 20px 32px;display:flex;gap:10px;}
 .btn-primary{flex:1;padding:13px;background:var(--navy);color:var(--gold);border:none;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
-.btn-secondary{flex:1;padding:13px;background:none;color:var(--navy);border:1px solid #ddd;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
+.btn-secondary{flex:1;padding:13px;background:none;color:var(--ink);border:1px solid #ddd;border-radius:4px;font-family:'Noto Sans JP',sans-serif;font-size:12px;letter-spacing:2px;cursor:pointer;}
 
 /* INFO GUIDE MODAL CONTENT */
 .guide-section{margin-bottom:16px;}
@@ -187,7 +188,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .checkin-item.in .checkin-time{color:var(--green);}
 .checkin-item.out .checkin-time{color:var(--red);}
 .checkin-label{font-size:9px;letter-spacing:2px;color:#888;margin-bottom:3px;}
-.checkin-time{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:600;color:var(--navy);}
+.checkin-time{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:600;color:var(--ink);}
 .checkin-divider{font-size:20px;color:#ddd;padding:0 10px;}
 .checkin-note{width:100%;font-size:9px;color:#aaa;text-align:center;margin-top:6px;letter-spacing:1px;}
 
@@ -217,12 +218,12 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .gourmet-shop.budget{border-left-color:#c8703a;}
 .gourmet-shop.premium{border-left-color:#c9a96e;}
 .gourmet-shop-top{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;}
-.gourmet-shop-name{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:600;color:var(--navy);line-height:1.4;}
+.gourmet-shop-name{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:600;color:var(--ink);line-height:1.4;}
 .gourmet-shop-price{display:inline-block;font-size:10px;color:#9b7a3a;background:#f5ede0;letter-spacing:1px;padding:2px 8px;border-radius:10px;width:fit-content;}
 .gourmet-shop-genre{display:inline-block;font-size:9px;letter-spacing:2px;background:var(--mist);color:var(--accent);padding:2px 8px;border-radius:10px;margin-bottom:4px;}
 .gourmet-shop-desc{font-size:11px;color:var(--gray);line-height:1.7;margin-bottom:6px;}
 .gourmet-shop-btns{display:flex;gap:5px;flex-wrap:wrap;}
-.gourmet-shop-btn{display:inline-block;font-size:10px;color:var(--navy);border:1px solid #ddd;padding:4px 10px;border-radius:2px;text-decoration:none;}
+.gourmet-shop-btn{display:inline-block;font-size:10px;color:var(--ink);border:1px solid #ddd;padding:4px 10px;border-radius:2px;text-decoration:none;}
 
 /* WISHLIST */
 .wishlist-section{margin-top:20px;}
@@ -300,6 +301,25 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
 .ts-section-head h2{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:700;margin:0;}
 .ts-section-icon{font-size:20px;line-height:1;flex-shrink:0;}
 
+
+/* autumn readability overrides */
+.tl-time,.form-label,.guide-section-title,.hotel-night,.wishlist-title{color:var(--gold-ink);}
+.tab{color:rgba(255,255,255,.82);}
+.nav-item{color:rgba(255,255,255,.8);}
+.nav-item.active{color:var(--gold);}
+.tab.active{background:rgba(255,224,138,.14);}
+.tip-text{opacity:1;}
+.big-btn.transit{color:#8f3512;}
+.big-btn.hotel{color:#7a4f14;}
+.checkin-label{color:#6b5a50;}
+.checkin-note{color:#7d6658;}
+.checkin-divider{color:#c9a58a;}
+.gourmet-shop-price{color:#7a5a1e;}
+.wishlist-empty{color:#7d6658;}
+.ts-badge-walk{color:#8f3512;}
+.tl-drag-handle{color:#c9a58a;}
+.add-btn{color:var(--gold-ink);border-color:var(--gold-ink);}
+.app-header-date,.day-banner-date{color:var(--gold-light);}
 </style>
 </head>
 <body>
@@ -552,7 +572,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--n
     <div style="height:1px;background:var(--mist);margin:20px 0;"></div>
 
     <!-- エリア別おすすめ -->
-    <div style="font-size:10px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;">📍 エリア別おすすめ飲食店</div>
+    <div style="font-size:10px;letter-spacing:4px;color:var(--gold-ink);margin-bottom:14px;">📍 エリア別おすすめ飲食店</div>
 
     <!-- 横浜中華街 -->
     <div class="gourmet-area">

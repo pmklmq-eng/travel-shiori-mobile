@@ -326,6 +326,17 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
 .add-btn{color:var(--gold-ink);border-color:var(--gold-ink);}
 .app-header-date,.day-banner-date{color:var(--gold-light);}
 .gourmet-shop-yomi{display:block;font-size:12px;font-weight:400;color:var(--fg2);letter-spacing:1px;margin-top:2px;font-family:'Noto Sans JP',sans-serif;}
+
+/* weather */
+.day-banner{flex-wrap:wrap;}
+.wx{flex-basis:100%;display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.wx-chip{flex:1 1 0;min-width:0;background:rgba(255,255,255,.14);color:var(--cream);border-radius:6px;padding:5px 8px;font-size:12.5px;line-height:1.35;display:flex;align-items:center;gap:6px;}
+.wx-chip .wx-ico{font-size:20px;line-height:1;}
+.wx-chip .wx-place{font-size:11px;opacity:.9;letter-spacing:1px;}
+.wx-chip .wx-temp{font-weight:500;}
+.wx-chip .wx-hi{color:#ffd0b8;}
+.wx-chip .wx-lo{color:#cfe3ff;}
+.wx-tag{flex-basis:100%;font-size:11px;letter-spacing:2px;color:var(--gold);}
 </style>
 </head>
 <body>
@@ -1618,6 +1629,48 @@ setInterval(()=>{
   if(isDragging || isModalOpen) return;
   ['day1','day2','day3'].forEach(renderDay);
 }, 60000);
+
+// =============================================
+// WEATHER (Open-Meteo: 予報 → 当日 → 実績)
+// =============================================
+const WX_PLACES = { yamagata:{name:'山形',lat:38.2554,lon:140.3396}, yokohama:{name:'横浜',lat:35.4437,lon:139.6380}, tokyo:{name:'東京',lat:35.6969,lon:139.8140} };
+const WX_DAYS = { day1:['yamagata','yokohama'], day2:['yokohama','tokyo'], day3:['tokyo','yamagata'] };
+const WX_CODE = c => c===0?['☀️','快晴']:c<=1?['🌤','晴れ']:c===2?['⛅','晴れ時々曇り']:c===3?['☁️','曇り']:c<=48?['🌫','霧']:c<=57?['🌦','霧雨']:c<=67?['🌧','雨']:c<=77?['🌨','雪']:c<=82?['🌦','にわか雨']:c<=86?['🌨','にわか雪']:['⛈','雷雨'];
+function wxToday(){ const d=new Date(Date.now()+9*3600*1000); return d.toISOString().slice(0,10); }
+function wxRender(data){
+  const keys=Object.keys(WX_PLACES); const today=wxToday();
+  Object.entries(WX_DAYS).forEach(([day,places])=>{
+    const banner=document.querySelector('#panel-'+day+' .day-banner'); if(!banner) return;
+    let box=banner.querySelector('.wx'); if(!box){ box=document.createElement('div'); box.className='wx'; banner.appendChild(box); }
+    const date=DAY_DATES[day];
+    const tag = date<today ? '実際の天気' : date===today ? '今日の予報' : '予報';
+    const chips=places.map(k=>{
+      const d=data && data[keys.indexOf(k)] && data[keys.indexOf(k)].daily; if(!d) return '';
+      const i=d.time.indexOf(date); if(i<0 || d.weather_code[i]==null) return '';
+      const [ico,txt]=WX_CODE(d.weather_code[i]);
+      const hi=Math.round(d.temperature_2m_max[i]), lo=Math.round(d.temperature_2m_min[i]);
+      const rain = date<today ? (d.precipitation_sum[i]!=null ? ' · 雨量'+Math.round(d.precipitation_sum[i]*10)/10+'mm' : '')
+                              : (d.precipitation_probability_max[i]!=null ? ' · 降水'+d.precipitation_probability_max[i]+'%' : '');
+      return `<div class="wx-chip"><span class="wx-ico">${ico}</span><span><span class="wx-place">${WX_PLACES[k].name}</span> ${txt}<br><span class="wx-temp"><span class="wx-hi">${hi}°</span> / <span class="wx-lo">${lo}°</span></span>${rain}</span></div>`;
+    }).join('');
+    box.innerHTML = chips ? `<span class="wx-tag">${tag}</span>${chips}` : '';
+  });
+}
+async function wxLoad(){
+  let cache=null; try{ cache=JSON.parse(localStorage.getItem('wx-cache')||'null'); }catch(e){}
+  if(cache && cache.data) wxRender(cache.data);
+  if(cache && Date.now()-cache.t < 3600*1000) return;
+  const ks=Object.keys(WX_PLACES);
+  const url='https://api.open-meteo.com/v1/forecast?latitude='+ks.map(k=>WX_PLACES[k].lat).join(',')+'&longitude='+ks.map(k=>WX_PLACES[k].lon).join(',')
+    +'&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum&timezone=Asia%2FTokyo&start_date='+DAY_DATES.day1+'&end_date='+DAY_DATES.day3;
+  try{
+    const r=await fetch(url); if(!r.ok) return;
+    let data=await r.json(); if(!Array.isArray(data)) data=[data];
+    try{ localStorage.setItem('wx-cache', JSON.stringify({t:Date.now(), data})); }catch(e){}
+    wxRender(data);
+  }catch(e){}
+}
+wxLoad();
 </script>
 </body>
 </html>

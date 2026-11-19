@@ -863,7 +863,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
     <div class="hotel-card">
       <div class="hotel-night">1泊目 — NOV 20</div>
       <div class="hotel-name">ホテルニューグランド</div>
-      <div class="hotel-note">山下公園隣接の老舗クラシックホテル<br>最寄：みなとみらい線「元町・中華街駅」1番出口 徒歩約1分<br>ナポリタン・ドリア発祥の地としても有名</div>
+      <div class="hotel-note">山下公園隣接の老舗クラシックホテル<br>最寄：みなとみらい線「元町・中華街駅」1番出口 徒歩約1分<br>ナポリタン・ドリア発祥の地としても有名<br>📞 045-681-1841（代表）</div>
       <div class="checkin-bar">
         <div class="checkin-item in">
           <div class="checkin-label">チェックイン</div>
@@ -880,6 +880,7 @@ body{background:var(--cream);font-family:'Noto Sans JP',sans-serif;color:var(--i
         <a class="big-btn map" href="https://maps.google.com/?cid=16412194114761053098" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">📍</span>地図</a>
         <a class="big-btn hotel" href="https://www.hotel-newgrand.co.jp/" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">🌐</span>公式サイト</a>
         <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/ホテルニューグランド横浜" target="_blank" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">🗺</span>ルート</a>
+        <a class="big-btn hotel" href="tel:0456811841" style="flex:1;text-align:center;padding:10px 6px;border-radius:6px;text-decoration:none;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:3px;"><span style="font-size:21px;">📞</span>電話</a>
       </div>
     </div>
     <div class="hotel-card">
@@ -1277,6 +1278,7 @@ function createItemEl(item, day, idx, isNow) {
         <a class="big-btn map" href="https://maps.google.com/?q=${encodeURIComponent(hotelQuery)}" target="_blank"><span class="big-btn-icon">📍</span>地図</a>
         <a class="big-btn transit" href="https://www.google.com/maps/dir/現在地/${encodeURIComponent(hotelQuery)}" target="_blank"><span class="big-btn-icon">🗺</span>ルート</a>
         <a class="big-btn hotel" href="${isNew ? 'https://www.hotel-newgrand.co.jp/' : 'https://www.tobuhotel.co.jp/levant/'}" target="_blank"><span class="big-btn-icon">🌐</span>公式</a>
+        <a class="big-btn hotel" href="${isNew ? 'tel:0456811841' : 'tel:0356115511'}"><span class="big-btn-icon">📞</span>電話</a>
       </div>`;
   } else if (item.type === 'transit') {
     const yahooLinks = (item.links||[]).filter(l => l.label && (l.label.includes('Yahoo') || l.label.includes('時刻表')));
